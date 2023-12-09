@@ -17,4 +17,16 @@ int main()
 	std::cout << "\n";
 	std::cin >> x;
 	return 0;
+
+
+	// Enter Intro
+	// Get Player Info
+	// Create init player obj
+	// Save init player obj
+	// Open Main Menu
+	// Only allow first level tutorial selection
+	// Enter tutorial version of game loop
+	// Exit to main menu
+	// Begin tutorial version of main menu loop
+	// Let player begin journey 
 }
