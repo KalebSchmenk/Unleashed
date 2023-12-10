@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include "Player.h"
+#include "FileManager.h"
 
 using namespace std;
 
@@ -19,64 +20,12 @@ int main()
 
 	PlayerObj player(newName, newHealth);
 
+	DataManager data;
+	PlayerData tempData = player.GetPlayerData();
+	data.SaveData(&tempData);
+	PlayerData newData = data.LoadData();
 
-	// Data write and read
-	std::fstream f; 
-
-	// Write
-	f.open("playerData.dat", ios::out);
-	if (f)
-	{
-		PlayerData playerDataCopy = player.GetPlayerData();
-
-		f << playerDataCopy.playerName << "" << std::endl;
-		f << playerDataCopy.playerHealth << "" << std::endl;
-
-		// Close
-		f.close();
-	}
-	else
-	{
-		cout << "\n\nFailed to open a new data file...\n\n";
-	}
-
-	// Read
-	f.open("playerData.dat", ios::in);
-	if (f)
-	{
-		PlayerData readInData;
-
-		int i = 0;
-		string s;
-		while (f)
-		{
-			std::getline(f, s);
-
-			if (s.compare("") == 0) break;
-
-			if (i == 0)
-			{
-				if (!s.empty() && s[s.length() - 1] == '\n') {
-					s.erase(s.length() - 1);
-				}
-				readInData.playerName = s;
-			}
-			else
-			{
-				readInData.playerHealth = stoi(s);
-			}
-			i++;
-		}
-
-		cout << "\n\nFrom our data, we see that the player's name is " << readInData.playerName << " and their health is " << readInData.playerHealth;
-
-		// Close
-		f.close();
-	}
-	else
-	{
-		cout << "\n\nFailed to open a new data file...\n\n";
-	}
+	cout << "Player name is: " << newData.playerName << " and health is " << newData.playerHealth << endl;
 
 	return 1;
 
