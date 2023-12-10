@@ -1,7 +1,9 @@
 #pragma once
 
-#include <iostream>
-using namespace std;
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include <string>
 
 class PlayerObj
 {
@@ -16,3 +18,4 @@ private:
 	// More Data Eventually
 
 };
+#endif // PLAYER_H
