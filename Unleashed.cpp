@@ -25,7 +25,7 @@ int main()
 	data.SaveData(&tempData);
 	PlayerData newData = data.LoadData();
 
-	cout << "Player name is: " << newData.playerName << " and health is " << newData.playerHealth << endl;
+	cout << "Player name is " << newData.playerName << " and health is " << newData.playerHealth << endl;
 
 	return 1;
 

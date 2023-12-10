@@ -3,6 +3,9 @@
 #ifndef FILEMANAGER_H
 #define FILEMANAGER_H
 
+#include <iostream>
+#include <stdexcept>
+#include <string>
 #include <fstream>
 #include "Player.h"
 

@@ -1,5 +1,3 @@
-#include <iostream>
-#include <string>
 #include "FileManager.h"
 
 
@@ -49,6 +47,11 @@ PlayerData DataManager::LoadData()
 	f.open("playerData.dat", std::ios::in);
 	if (f)
 	{
+		// Hard coded for data formatted as follows:
+		// Line 1: Player Name
+		// Line 2: Player Health
+		// Research into serialization was fruitless so far
+
 		int i = 0;
 		std::string s;
 		while (f)
@@ -77,6 +80,27 @@ PlayerData DataManager::LoadData()
 	{
 		std::cout << "\n\nFailed to read a data file...\n\n";
 	}
+
+	// If the name or health are invalid arguments, default to these values.
+	// Does it have to be a try catch? No, but it's interesting to have this be considered an exception
+	try
+	{
+		if (readInData.playerName.compare("") == 0) throw std::invalid_argument("Name was empty");
+	}
+	catch (const std::invalid_argument& e)
+	{
+		readInData.playerName = "Phoenix";
+	}
+	
+	try
+	{
+		if (readInData.playerHealth == -1) throw std::invalid_argument("Health was never overriden");
+	}
+	catch (const std::invalid_argument& e)
+	{
+		readInData.playerHealth = 15;
+	}
+
 	return readInData;
 }
 
