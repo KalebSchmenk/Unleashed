@@ -1,16 +1,18 @@
-#include <iostream>
+// Main starting point
 
+#include <iostream>
 #include "Player.h"
 
 
-int main() 
-{ 
+int main()
+{
 	std::cout << "Hello!\n\n";
 	std::cout << "Please type a name for your character...\n\n";
 	string temp;
 	std::cin >> temp;
 	PlayerObj* player = new PlayerObj(temp);
 	std:cout << "\n\nHello " << player->name << "!";
+
 
 	// Exit
 	int x;
@@ -30,3 +32,4 @@ int main()
 	// Begin tutorial version of main menu loop
 	// Let player begin journey 
 }
+

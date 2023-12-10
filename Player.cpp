@@ -11,5 +11,3 @@ PlayerObj::PlayerObj(std::string name)
 {
 	this->name = name;
 }
-
-
