@@ -5,17 +5,28 @@
 
 #include <string>
 
+struct PlayerData
+{
+	std::string playerName;
+	int playerHealth = 5;
+};
+
 class PlayerObj
 {
 public:
-	std::string name;
+	std::string GetName();
+	int GetHealth();
+	PlayerData GetPlayerData();
+	
+	int SetPlayerData(PlayerData newData);
+	void SetName(std::string nameToSet);
+	void SetHealth(int newHealth);
 
-	// More Data Eventually
-
-	PlayerObj(std::string name);
+	PlayerObj(std::string name, int startHealth);
 
 private:
-	// More Data Eventually
-
+	std::string name;
+	int health;
+	PlayerData playerData;
 };
 #endif // PLAYER_H
