@@ -24,6 +24,12 @@ PlayerObj::PlayerObj(std::string name, int health)
 	playerData.playerName = name;
 }
 
+PlayerObj::PlayerObj()
+{
+	this->name = "Phoenix";
+	this->health = -1;
+}
+
 // Getters and Setters
 int PlayerObj::GetHealth()
 {
@@ -51,6 +57,8 @@ int PlayerObj::SetPlayerData(PlayerData newData)
 	try
 	{
 		playerData = newData;
+		this->health = newData.playerHealth;
+		this->name = newData.playerName;
 		return 1;
 	}
 	catch(...) 

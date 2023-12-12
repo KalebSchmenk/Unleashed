@@ -5,30 +5,6 @@
 #include "Player.h"
 #include "FileManager.h"
 
-using namespace std;
-
-int main()
-{
-	cout << "Hello!\n\n";
-	cout << "Please type a name for your character...\n\n";
-	string newName;
-	cin >> newName;
-
-	cout << "\nPlease type a health amount for your character...\n\n";
-	int newHealth;
-	cin >> newHealth;
-
-	PlayerObj player(newName, newHealth);
-
-	DataManager data;
-	PlayerData tempData = player.GetPlayerData();
-	data.SaveData(&tempData);
-	PlayerData newData = data.LoadData();
-
-	cout << "Player name is " << newData.playerName << " and health is " << newData.playerHealth << endl;
-
-	return 1;
-
 
 	// Enter Intro
 	// Get Player Info
@@ -40,5 +16,58 @@ int main()
 	// Exit to main menu
 	// Begin tutorial version of main menu loop
 	// Let player begin journey 
+
+int main()
+{
+	std::cout << "===================================================================================================\n\n";
+	std::cout << "                                ______                   _______               ______    ___        \n";
+	std::cout << "|      |   |     |   |         |              /\\        |          |      |   |         |   \\     \n";
+	std::cout << "|      |   |\\    |   |         |             /  \\       |          |      |   |         |    \\   \n";
+	std::cout << "|      |   | \\   |   |         |            /    \\      |          |      |   |         |     \\  \n";
+	std::cout << "|      |   |  \\  |   |         |------     /______\\     |------|   |------|   |------   |     /   \n";
+	std::cout << "|      |   |   \\ |   |         |          /        \\           |   |      |   |         |    /    \n";
+	std::cout << "|______|   |    \\|   |______   |______   /          \\   _______|   |      |   |______   |___/     \n";
+	std::cout << "\n\n===================================================================================================\n\n";
+
+
+	std::string name;
+	DataManager data;
+	PlayerData playerData;
+	PlayerObj player;
+
+	try
+	{
+		playerData = data.LoadData();
+
+		// If load successful
+		std::cout << "Hello again, " << playerData.playerName << "\n\n";
+
+		player.SetPlayerData(playerData); // Handles name and health setting
+	} 
+	catch (...)
+	{
+		// If load unsuccessful
+		std::cout << "Hello!\n\n";
+		std::cout << "Please type a name for your character...\n\n";
+		
+		std::cin >> name;
+
+		playerData.playerName = name;
+		playerData.playerHealth = 15; // Default
+
+		player.SetPlayerData(playerData); // Handles name and health setting
+
+		// Saves new data
+		PlayerData tempData = player.GetPlayerData();
+		data.SaveData(&tempData);
+	}
+
+	
+	PlayerData newData = data.LoadData();
+
+	std::cout << "\nPlayer name is " << newData.playerName << " and health is " << newData.playerHealth << std::endl;
+
+
+	return 1;
 }
 

@@ -32,7 +32,7 @@ void DataManager::SaveData(PlayerData* playerData)
 	}
 	else
 	{
-		std::cout << "\n\nFailed to open a new data file...\n\n";
+		throw std::invalid_argument("Couldn't open a new file");	
 	}
 }
 
@@ -78,7 +78,7 @@ PlayerData DataManager::LoadData()
 	}
 	else
 	{
-		std::cout << "\n\nFailed to read a data file...\n\n";
+		throw std::invalid_argument("No data file found");
 	}
 
 	// If the name or health are invalid arguments, default to these values.

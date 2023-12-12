@@ -23,6 +23,7 @@ public:
 	void SetHealth(int newHealth);
 
 	PlayerObj(std::string name, int startHealth);
+	PlayerObj();
 
 private:
 	std::string name;
