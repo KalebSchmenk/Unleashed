@@ -23,8 +23,8 @@ int main()
 	std::cout << "                                ______                   _______               ______    ___        \n";
 	std::cout << "|      |   |     |   |         |              /\\        |          |      |   |         |   \\     \n";
 	std::cout << "|      |   |\\    |   |         |             /  \\       |          |      |   |         |    \\   \n";
-	std::cout << "|      |   | \\   |   |         |            /    \\      |          |      |   |         |     \\  \n";
-	std::cout << "|      |   |  \\  |   |         |------     /______\\     |------|   |------|   |------   |     /   \n";
+	std::cout << "|      |   | \\   |   |         |            /    \\      |______    |      |   |         |     \\  \n";
+	std::cout << "|      |   |  \\  |   |         |------     /______\\            |   |------|   |------   |     /   \n";
 	std::cout << "|      |   |   \\ |   |         |          /        \\           |   |      |   |         |    /    \n";
 	std::cout << "|______|   |    \\|   |______   |______   /          \\   _______|   |      |   |______   |___/     \n";
 	std::cout << "\n\n===================================================================================================\n\n";
@@ -61,12 +61,21 @@ int main()
 		PlayerData tempData = player.GetPlayerData();
 		data.SaveData(&tempData);
 	}
-
 	
 	PlayerData newData = data.LoadData();
 
 	std::cout << "\nPlayer name is " << newData.playerName << " and health is " << newData.playerHealth << std::endl;
+	std::cout << "\n\nDelete saved file? (y/n)\n";
+	
+	char answer;
+	std::cin >> answer;
 
+	while (answer != 'y' && answer != 'n')
+	{
+		std::cout << "\n\nSorry, didn't catch that. Delete saved file? (y/n)\n";
+		std::cin >> answer;
+	}
+	if (answer == 'y') data.DeleteData();
 
 	return 1;
 }

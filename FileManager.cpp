@@ -36,6 +36,20 @@ void DataManager::SaveData(PlayerData* playerData)
 	}
 }
 
+// Deletes data
+int DataManager::DeleteData()
+{
+	try
+	{
+		std::remove("playerData.dat");
+		return 1;
+	}
+	catch (...)
+	{
+		return 0;
+	}
+}
+
 // Loads data
 PlayerData DataManager::LoadData()
 {

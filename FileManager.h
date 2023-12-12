@@ -12,7 +12,8 @@
 class DataManager
 {
 public:
-	void SaveData(PlayerData* playerData);
-	PlayerData LoadData();
+	void SaveData(PlayerData* playerData); // Save data func
+	int DeleteData(); // Delete data func
+	PlayerData LoadData(); // Load data func
 };
 #endif // FILEMANAGER_H

@@ -26,8 +26,8 @@ public:
 	PlayerObj();
 
 private:
-	std::string name;
-	int health;
-	PlayerData playerData;
+	std::string name; // Player's name
+	int health; // Player's health
+	PlayerData playerData; // Player's current data as a struct
 };
 #endif // PLAYER_H
