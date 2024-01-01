@@ -4,6 +4,7 @@
 #include <fstream>
 #include "Player.h"
 #include "FileManager.h"
+#include <stdlib.h>
 
 
 	// Enter Intro
@@ -35,19 +36,21 @@ int main()
 	PlayerData playerData;
 	PlayerObj player;
 
+	// If player data file exists use it, if not create new player data
 	try
 	{
-		playerData = data.LoadData();
+		playerData = data.LoadData(); // LoadData() Throws an exception if it could not load a player data file which is why
+		                              // we have it in a try-catch. Not neccessary, but an interesting implementation
 
 		// If load successful
 		std::cout << "Hello again, " << playerData.playerName << "\n\n";
 
-		player.SetPlayerData(playerData); // Handles name and health setting
+		player.SetPlayerData(playerData); // Handles name and health setting internally
 	} 
 	catch (...)
 	{
 		// If load unsuccessful
-		std::cout << "Hello!\n\n";
+		std::cout << "Hello new player!\n\n";
 		std::cout << "Please type a name for your character...\n\n";
 		
 		std::cin >> name;
@@ -55,16 +58,53 @@ int main()
 		playerData.playerName = name;
 		playerData.playerHealth = 15; // Default
 
-		player.SetPlayerData(playerData); // Handles name and health setting
-
-		// Saves new data
-		PlayerData tempData = player.GetPlayerData();
-		data.SaveData(&tempData);
+		player.SetPlayerData(playerData); // Handles name and health setting internally
 	}
-	
-	PlayerData newData = data.LoadData();
 
-	std::cout << "\nPlayer name is " << newData.playerName << " and health is " << newData.playerHealth << std::endl;
+
+	//_______________________
+	// Game
+	//-----------------------
+	
+	bool goodSelect = false;
+	int menuSelect;
+
+	// Menu select loop
+	do
+	{
+		system("CLS"); // Clear console (Slow)
+
+		std::cout << "Please select an option\n\n";
+		std::cout << "\n1. Main Menu";
+		std::cout << "\n2. Quit\n\n";
+		std::cin >> menuSelect;
+
+		switch (menuSelect)
+		{
+			case 1:
+			{
+				goodSelect = true;
+				break;
+			}
+			case 2:
+			{
+				PlayerData tempData = player.GetPlayerData();
+				data.SaveData(&tempData);
+				goodSelect = true;
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
+	} while (goodSelect != true);
+	
+	
+	//_______________________
+
+
+
 	std::cout << "\n\nDelete saved file? (y/n)\n";
 	
 	char answer;
