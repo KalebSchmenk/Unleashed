@@ -4,12 +4,6 @@
 
 #include "Player.h"
 
-// Data
-std::string name = "";
-int health;
-//--------------------
-
-
 // Data struct
 struct PlayerData playerData;
 
@@ -17,27 +11,24 @@ struct PlayerData playerData;
 // Player constructor
 PlayerObj::PlayerObj(std::string name, int health)
 {
-	this->name = name;
-	this->health = health;
-
 	playerData.playerHealth = health;
 	playerData.playerName = name;
 }
 
 PlayerObj::PlayerObj()
 {
-	this->name = "Phoenix";
-	this->health = -1;
+	playerData.playerName = "Phoenix";
+	playerData.playerHealth = -1;
 }
 
 // Getters and Setters
 int PlayerObj::GetHealth()
 {
-	return health;
+	return playerData.playerHealth;
 }
 std::string PlayerObj::GetName() 
 {
-	return name;
+	return playerData.playerName;
 }
 PlayerData PlayerObj::GetPlayerData()
 {
@@ -46,19 +37,17 @@ PlayerData PlayerObj::GetPlayerData()
 
 void PlayerObj::SetHealth(int newHealth)
 {
-	health = newHealth;
+	playerData.playerHealth = newHealth;
 }
 void PlayerObj::SetName(std::string newName)
 {
-	name = newName;
+	playerData.playerName = newName;
 }
 int PlayerObj::SetPlayerData(PlayerData newData)
 {
 	try
 	{
 		playerData = newData;
-		this->health = newData.playerHealth;
-		this->name = newData.playerName;
 		return 1;
 	}
 	catch(...) 

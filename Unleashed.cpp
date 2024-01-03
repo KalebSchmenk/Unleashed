@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "FileManager.h"
 #include <stdlib.h>
+#include "Dungeon Headers/Dungeons.h"
 
 
 	// Enter Intro
@@ -43,7 +44,7 @@ int main()
 		                              // we have it in a try-catch. Not neccessary, but an interesting implementation
 
 		// If load successful
-		std::cout << "Hello again, " << playerData.playerName << "\n\n";
+		std::cout << "Hello again, " << playerData.playerName << " you have " << playerData.playerHealth << " HP!\n\n";
 
 		player.SetPlayerData(playerData); // Handles name and health setting internally
 	} 
@@ -75,7 +76,7 @@ int main()
 		system("CLS"); // Clear console (Slow)
 
 		std::cout << "Please select an option\n\n";
-		std::cout << "\n1. Main Menu";
+		std::cout << "\n1. Enter Cave Dungeon";
 		std::cout << "\n2. Quit\n\n";
 		std::cin >> menuSelect;
 
@@ -83,7 +84,13 @@ int main()
 		{
 			case 1:
 			{
-				goodSelect = true;
+				// Entering a dungeon
+				DungeonDifficulty difficulty = Hard;
+				CaveDungeon enteredDungeon = CaveDungeon(difficulty);
+				
+				enteredDungeon.StartDungeon(&player);
+
+				goodSelect = false;
 				break;
 			}
 			case 2:
