@@ -16,7 +16,5 @@ public:
 
 	CaveDungeon(DungeonDifficulty difficulty);
 
-private:
-	DungeonDifficulty dungeonDifficulty;
 };
 #endif // CAVE_DUNGEON_H

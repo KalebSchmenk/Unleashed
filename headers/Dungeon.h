@@ -19,10 +19,7 @@ public:
 	virtual DungeonDifficulty GetDifficulty();
 	virtual void StartDungeon(PlayerObj *player);
 
-	Dungeon(DungeonDifficulty difficulty);
-	Dungeon();
-
-private:
+protected:
 	DungeonDifficulty dungeonDifficulty;
 };
 #endif // DUNGEON_GENERATOR_H

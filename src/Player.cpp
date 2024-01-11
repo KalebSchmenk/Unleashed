@@ -1,5 +1,4 @@
 //
-//
 // Player Implementation
 
 #include "Player.h"
@@ -34,6 +33,10 @@ PlayerData PlayerObj::GetPlayerData()
 {
 	return playerData;
 }
+int PlayerObj::GetLevel()
+{
+	return playerData.playerLevel;
+}
 
 void PlayerObj::SetHealth(int newHealth)
 {
@@ -54,6 +57,12 @@ int PlayerObj::SetPlayerData(PlayerData newData)
 	{
 		return 0;
 	}
+}
+
+// Levels up player by 1. No paramater to ensure linear progression
+void PlayerObj::LevelUp()
+{
+	playerData.playerLevel++;
 }
 
 

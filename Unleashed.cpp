@@ -2,10 +2,13 @@
 
 #include <iostream>
 #include <fstream>
-#include "Player.h"
-#include "FileManager.h"
 #include <stdlib.h>
-#include "Dungeon Headers/Dungeons.h"
+#include <windows.h>
+
+#include "Player.h" // Player
+#include "FileManager.h" // File Management
+#include "Dungeon Headers/Dungeons.h" // All Dungeons
+
 
 
 	// Enter Intro
@@ -32,10 +35,11 @@ int main()
 	std::cout << "\n\n===================================================================================================\n\n";
 
 
-	std::string name;
+	// Game Related Data
 	DataManager data;
 	PlayerData playerData;
 	PlayerObj player;
+
 
 	// If player data file exists use it, if not create new player data
 	try
@@ -43,14 +47,21 @@ int main()
 		playerData = data.LoadData(); // LoadData() Throws an exception if it could not load a player data file which is why
 		                              // we have it in a try-catch. Not neccessary, but an interesting implementation
 
+
 		// If load successful
-		std::cout << "Hello again, " << playerData.playerName << " you have " << playerData.playerHealth << " HP!\n\n";
+		std::cout << "Hello again, " << playerData.playerName << ", you have " << playerData.playerHealth << " HP "
+			<< "and are level " << playerData.playerLevel << "\n";
 
 		player.SetPlayerData(playerData); // Handles name and health setting internally
+		
+		// Sleep for title screen. Otherwise it disappears too quickly
+		Sleep(5000);
 	} 
 	catch (...)
 	{
 		// If load unsuccessful
+		std::string name;
+
 		std::cout << "Hello new player!\n\n";
 		std::cout << "Please type a name for your character...\n\n";
 		
@@ -64,8 +75,11 @@ int main()
 
 
 	//_______________________
+	//
+	// 
 	// Game
-	//-----------------------
+	// 
+	//_______________________
 	
 	bool goodSelect = false;
 	int menuSelect;
@@ -75,9 +89,12 @@ int main()
 	{
 		system("CLS"); // Clear console (Slow)
 
+		std::cout << "MAIN MENU\n\n";
 		std::cout << "Please select an option\n\n";
-		std::cout << "\n1. Enter Cave Dungeon";
-		std::cout << "\n2. Quit\n\n";
+		std::cout << "\n1. Enter A Dungeon";
+		std::cout << "\n2. View Inventory";
+		std::cout << "\n3. Delete Character";
+		std::cout << "\n4. Quit\n\n";
 		std::cin >> menuSelect;
 
 		switch (menuSelect)
@@ -86,14 +103,22 @@ int main()
 			{
 				// Entering a dungeon
 				DungeonDifficulty difficulty = Hard;
-				CaveDungeon enteredDungeon = CaveDungeon(difficulty);
+				Dungeon* enteredDungeon = new CaveDungeon(difficulty);
 				
-				enteredDungeon.StartDungeon(&player);
-
-				goodSelect = false;
+				enteredDungeon->StartDungeon(&player);
 				break;
 			}
 			case 2:
+			{
+				std::cout << "Inventory not implemented";
+				break;
+			}
+			case 3:
+			{
+				std::cout << "Delete character not implemented";
+				break;
+			}
+			case 4:
 			{
 				PlayerData tempData = player.GetPlayerData();
 				data.SaveData(&tempData);

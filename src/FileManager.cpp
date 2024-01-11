@@ -1,23 +1,13 @@
+//
+// Player data file manager implementation
+
 #include "FileManager.h"
-
-
-// A successful way of using the data manager is as follows
-// 
-// DataManager data;
-// 
-// Saving data:
-// PlayerData tempData = player.GetPlayerData(); (Where player = PlayerObj)
-// data.SaveData(&tempData);
-// 
-// Loading Data:
-// PlayerData newData = data.LoadData();
-
 
 
 // Data write and read
 std::fstream f;
 
-// Saves data
+// Saves player data to .dat file
 void DataManager::SaveData(PlayerData* playerData)
 {
 	// Write
@@ -26,6 +16,7 @@ void DataManager::SaveData(PlayerData* playerData)
 	{
 		f << playerData->playerName << std::endl;
 		f << playerData->playerHealth << std::endl;
+		f << playerData->playerLevel << std::endl;
 
 		// Close
 		f.close();
@@ -36,7 +27,7 @@ void DataManager::SaveData(PlayerData* playerData)
 	}
 }
 
-// Deletes data
+// Deletes player .dat data file
 int DataManager::DeleteData()
 {
 	try
@@ -61,10 +52,14 @@ PlayerData DataManager::LoadData()
 	f.open("playerData.dat", std::ios::in);
 	if (f)
 	{
+		// Research into serialization was fruitless so far
+		// The idea is that we iterate over every line and assign the data to the correct memory location-
+		// -based on what iteration (line) we are on in the file
+		// 
 		// Hard coded for data formatted as follows:
 		// Line 1: Player Name
 		// Line 2: Player Health
-		// Research into serialization was fruitless so far
+		// Line 3: Player Level
 
 		int i = 0;
 		std::string s;
@@ -74,16 +69,23 @@ PlayerData DataManager::LoadData()
 
 			if (s.compare("") == 0) break;
 
-			if (i == 0)
+			switch (i)
 			{
-				if (!s.empty() && s[s.length() - 1] == '\n') {
-					s.erase(s.length() - 1);
+				case 0:
+				{
+					readInData.playerName = s;
+					break;
 				}
-				readInData.playerName = s;
-			}
-			else
-			{
-				readInData.playerHealth = stoi(s);
+				case 1:
+				{
+					readInData.playerHealth = stoi(s);
+					break;
+				}
+				case 2:
+				{
+					readInData.playerLevel = stoi(s);
+					break;
+				}
 			}
 			i++;
 		}

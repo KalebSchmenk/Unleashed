@@ -20,7 +20,7 @@ DungeonDifficulty CaveDungeon::GetDifficulty()
 void CaveDungeon::StartDungeon(PlayerObj *player)
 {
 	system("CLS"); // Clear console (Slow)
-	std::cout << "\n\nWelcome to the CAVE DUNGEON!\n\n";
+	std::cout << "Welcome to the CAVE DUNGEON!\n\n";
 
 	// lol
 	switch(dungeonDifficulty)
@@ -28,7 +28,7 @@ void CaveDungeon::StartDungeon(PlayerObj *player)
 		case Easy:
 			std::cout << "\n\nYou're difficulty level is: EASY\n\n";
 			std::cout << "YOU TOOK 1 DAMAGE!\n\n";
-			player->SetHealth(player->GetHealth() - 11);
+			player->SetHealth(player->GetHealth() - 1);
 			break;
 		case Medium:
 			std::cout << "\n\nYou're difficulty level is: MEDIUM\n\n";
