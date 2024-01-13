@@ -7,9 +7,14 @@
 
 struct PlayerData
 {
-	std::string playerName;
+	std::string playerName = "                               ";
 	int playerHealth = 5;
 	int playerLevel = 1;
+
+	~PlayerData()
+	{
+		playerName = "";
+	}
 };
 
 class PlayerObj

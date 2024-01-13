@@ -44,13 +44,13 @@ int main()
 	// If player data file exists use it, if not create new player data
 	try
 	{
-		playerData = data.LoadData(); // LoadData() Throws an exception if it could not load a player data file which is why
-		                              // we have it in a try-catch. Not neccessary, but an interesting implementation
+		auto temp = &playerData;
 
+		data.LoadData(temp);	// LoadData() Throws an exception if it could not load a player data file which is why
+		                        // we have it in a try-catch. Not neccessary, but an interesting implementation
 
 		// If load successful
-		std::cout << "Hello again, " << playerData.playerName << ", you have " << playerData.playerHealth << " HP "
-			<< "and are level " << playerData.playerLevel << "\n";
+		std::cout << "Hello again, " << playerData.playerName << ", you have " << playerData.playerHealth << " HP " << "and are level " << playerData.playerLevel << "\n";
 
 		player.SetPlayerData(playerData); // Handles name and health setting internally
 		
@@ -120,8 +120,10 @@ int main()
 			}
 			case 4:
 			{
-				PlayerData tempData = player.GetPlayerData();
-				data.SaveData(&tempData);
+				//PlayerData tempData = player.GetPlayerData();
+				//data.SaveData(&tempData);
+
+				data.SaveData(playerData);
 				goodSelect = true;
 				break;
 			}
