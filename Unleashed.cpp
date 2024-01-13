@@ -55,7 +55,7 @@ int main()
 		player.SetPlayerData(playerData); // Handles name and health setting internally
 		
 		// Sleep for title screen. Otherwise it disappears too quickly
-		Sleep(5000);
+		Sleep(2500);
 	} 
 	catch (...)
 	{
@@ -71,6 +71,8 @@ int main()
 		playerData.playerHealth = 15; // Default
 
 		player.SetPlayerData(playerData); // Handles name and health setting internally
+		player.LevelUp();
+		player.LevelUp();
 	}
 
 
@@ -106,6 +108,7 @@ int main()
 				Dungeon* enteredDungeon = new CaveDungeon(difficulty);
 				
 				enteredDungeon->StartDungeon(&player);
+				player.LevelUp();
 				break;
 			}
 			case 2:
@@ -120,10 +123,7 @@ int main()
 			}
 			case 4:
 			{
-				//PlayerData tempData = player.GetPlayerData();
-				//data.SaveData(&tempData);
-
-				data.SaveData(playerData);
+				data.SaveData(player.GetPlayerData());
 				goodSelect = true;
 				break;
 			}

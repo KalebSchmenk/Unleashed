@@ -44,5 +44,5 @@ void CaveDungeon::StartDungeon(PlayerObj *player)
 			break;
 	}
 
-	Sleep(5000);
+	Sleep(2500);
 }

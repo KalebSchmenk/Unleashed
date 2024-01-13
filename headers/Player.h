@@ -7,9 +7,9 @@
 
 struct PlayerData
 {
-	std::string playerName = "                               ";
-	int playerHealth = 5;
-	int playerLevel = 1;
+	std::string playerName = "default";
+	int playerHealth = -1;
+	int playerLevel = -1;
 
 	~PlayerData()
 	{
@@ -23,7 +23,7 @@ public:
 	std::string GetName();
 	int GetHealth();
 	int GetLevel();
-	PlayerData GetPlayerData();
+	PlayerData* GetPlayerData();
 	
 	int SetPlayerData(PlayerData newData);
 	void SetName(std::string nameToSet);

@@ -5,14 +5,15 @@
 
 
 // Saves player data to .dat file
-void DataManager::SaveData(PlayerData playerData)
+void DataManager::SaveData(PlayerData* playerData)
 {
 	std::ofstream f;
 	f.open("PlayerDataFile.txt", std::ios::app);
 
 	if (f)
 	{
-		f.write((char*)&playerData, sizeof(playerData));
+		std::cout << "\n\n" << playerData->playerName << " " << playerData->playerHealth << " " << playerData->playerLevel;
+		f.write((char*)playerData, sizeof(*playerData));
 		f.close();
 	}
 	else
@@ -45,7 +46,7 @@ void DataManager::LoadData(PlayerData* data)
 	if(f)
 	{
 		f.seekg(0);
-		f.read((char*)data, sizeof(PlayerData));
+		f.read((char*)data, sizeof(*data));
 		f.close();
 	}
 	else

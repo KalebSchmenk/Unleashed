@@ -29,9 +29,9 @@ std::string PlayerObj::GetName()
 {
 	return playerData.playerName;
 }
-PlayerData PlayerObj::GetPlayerData()
+PlayerData* PlayerObj::GetPlayerData()
 {
-	return playerData;
+	return &playerData;
 }
 int PlayerObj::GetLevel()
 {

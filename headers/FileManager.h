@@ -12,7 +12,7 @@
 class DataManager
 {
 public:
-	void SaveData(PlayerData playerData); // Save data func
+	void SaveData(PlayerData* playerData); // Save data func
 	int DeleteData(); // Delete data func
 	void LoadData(PlayerData* data); // Load data func
 };
