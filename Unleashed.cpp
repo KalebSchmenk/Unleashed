@@ -8,6 +8,7 @@
 #include "Player.h" // Player
 #include "FileManager.h" // File Management
 #include "Dungeon Headers/Dungeons.h" // All Dungeons
+#include "Item Headers/Items.h" // All Items
 
 
 
@@ -50,7 +51,8 @@ int main()
 		                        // we have it in a try-catch. Not neccessary, but an interesting implementation
 
 		// If load successful
-		std::cout << "Hello again, " << playerData.playerName << ", you have " << playerData.playerHealth << " HP " << "and are level " << playerData.playerLevel << "\n";
+		std::cout << "Hello again, " << playerData.playerName << ", you have " << playerData.playerHealth << " HP " 
+			<< "and are level " << playerData.playerLevel << "\n";
 
 		player.SetPlayerData(playerData); // Handles name and health setting internally
 		

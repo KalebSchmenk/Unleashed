@@ -3,6 +3,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include <iostream>
 #include <string>
 
 // All collectibles are considered an Item
