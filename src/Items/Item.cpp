@@ -18,6 +18,13 @@ void Item::SetItemName(std::string newName)
 	itemName = newName;
 }
 
+void Item::SetItemCount(int setTo)
+{
+	itemCount = setTo;
+
+	if (itemCount < 0) itemCount = 0; // An "Item" count should never be negative
+}
+
 void Item::ChangeItemCount(int changeBy)
 {
 	itemCount += changeBy;

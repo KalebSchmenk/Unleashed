@@ -6,7 +6,7 @@
 class Coin : public Item
 {
 public:
-	virtual Item Buy(); // I like this function signature
+	virtual Item Buy(); // I like this function signature. Not sure if coins should control purchases though
 
 	Coin(int amount); // Ensure to override item vars in Coin instructor
 };

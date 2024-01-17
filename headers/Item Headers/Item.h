@@ -15,6 +15,7 @@ public:
 	virtual int GetItemCount(); // Returns how many of this "item" is within this class object. (A "Coin" item may contain more than 1 coin in the class)
 
 	virtual void SetItemName(std::string newName);// Sets new item name
+	virtual void SetItemCount(int setTo); // Sets count to this number
 	virtual void ChangeItemCount(int changeBy); // Changes count of item(s) within this object
 
 

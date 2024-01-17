@@ -7,4 +7,6 @@ class Sword : public Item
 {
 public:
 	virtual void Attack(); 
+
+	Sword();
 };

@@ -12,8 +12,8 @@ void DataManager::SaveData(PlayerData* playerData)
 
 	if (f)
 	{
-		std::cout << "\n\n" << playerData->playerName << " " << playerData->playerHealth << " " << playerData->playerLevel;
 		f.write((char*)playerData, sizeof(*playerData));
+
 		f.close();
 	}
 	else

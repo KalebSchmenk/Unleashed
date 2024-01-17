@@ -52,7 +52,10 @@ int main()
 
 		// If load successful
 		std::cout << "Hello again, " << playerData.playerName << ", you have " << playerData.playerHealth << " HP " 
-			<< "and are level " << playerData.playerLevel << "\n";
+			<< "and are level " << playerData.playerLevel << "\n\n";
+
+		std::cout << "You're current items are:";
+		player.PrintItems();
 
 		player.SetPlayerData(playerData); // Handles name and health setting internally
 		
@@ -115,7 +118,9 @@ int main()
 			}
 			case 2:
 			{
-				std::cout << "Inventory not implemented";
+				system("CLS"); // Clear console (Slow)
+				player.PrintItems();
+				Sleep(2250);
 				break;
 			}
 			case 3:

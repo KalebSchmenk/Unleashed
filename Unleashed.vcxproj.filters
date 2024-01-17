@@ -42,6 +42,15 @@
     <ClCompile Include="src\Dungeons\CaveDungeon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Items\Item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Items\Swords\Sword.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Items\Coin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\Player.h">
@@ -59,7 +68,16 @@
     <ClInclude Include="headers\Dungeon Headers\Dungeons.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Item Headers\Item.h">
+    <ClInclude Include="headers\Item Headers\Item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Item Headers\Items.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Item Headers\Sword Headers\Sword.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\Item Headers\Coin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
