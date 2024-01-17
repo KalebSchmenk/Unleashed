@@ -50,13 +50,16 @@
     <ClInclude Include="headers\FileManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Dungeon.h">
+    <ClInclude Include="headers\Dungeon Headers\Dungeon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\Dungeon Headers\CaveDungeon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\Dungeon Headers\Dungeons.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Item Headers\Item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

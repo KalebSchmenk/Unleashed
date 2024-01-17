@@ -156,9 +156,10 @@
   <ItemGroup>
     <ClInclude Include="headers\Dungeon Headers\CaveDungeon.h" />
     <ClInclude Include="headers\Dungeon Headers\Dungeons.h" />
-    <ClInclude Include="headers\Dungeon.h" />
+    <ClInclude Include="headers\Dungeon Headers\Dungeon.h" />
     <ClInclude Include="headers\FileManager.h" />
     <ClInclude Include="headers\Player.h" />
+    <ClInclude Include="Item Headers\Item.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
