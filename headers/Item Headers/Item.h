@@ -4,6 +4,7 @@
 #define ITEM_H
 
 #include <iostream>
+#include <fstream>
 #include <string>
 
 // All collectibles are considered an Item
@@ -17,6 +18,8 @@ public:
 	virtual void SetItemName(std::string newName);// Sets new item name
 	virtual void SetItemCount(int setTo); // Sets count to this number
 	virtual void ChangeItemCount(int changeBy); // Changes count of item(s) within this object
+
+	virtual void SaveData(std::fstream f); // Each class needs to write it's own save data functionality 
 
 
 protected:

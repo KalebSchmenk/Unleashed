@@ -3,6 +3,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include "Item Headers/Items.h"
@@ -12,6 +13,7 @@ struct PlayerData
 	std::string playerName = "default";
 	int playerHealth = -1;
 	int playerLevel = -1;
+	Sword playerSword;
 	std::vector<Item>* ItemList = new std::vector<Item>;
 };
 

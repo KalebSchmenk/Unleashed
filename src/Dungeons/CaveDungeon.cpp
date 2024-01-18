@@ -73,11 +73,14 @@ void CaveDungeon::StartDungeon(PlayerObj *player)
 			Sleep(1250);
 
 			std::cout << "You found 5 gold and a sword!";
-			Coin coins(5);
-			Sword sword;
-			sword.SetItemName("Sword");
-			player->AddItem(coins);
-			player->AddItem(sword);
+			//Coin coins(5);
+			//Sword sword;
+			//sword.SetItemName("Sword");
+			//player->AddItem(coins);
+			//player->AddItem(sword);
+			Item item;
+			item.SetItemName("Yoyo");
+			player->AddItem(item);
 			break;
 		}
 		default:
