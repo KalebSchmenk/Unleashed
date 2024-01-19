@@ -8,6 +8,11 @@ Coin::Coin(int amount)
 	SetItemName("Coin");
 	SetItemCount(amount);
 }
+Coin::Coin()
+{
+	SetItemName("Coin");
+	SetItemCount(0);
+}
 
 // TODO
 Item Coin::Buy()

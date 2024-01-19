@@ -8,31 +8,11 @@
 void DataManager::SaveData(PlayerData* playerData)
 {
 	std::fstream f;
-	std::vector<Item> items = *playerData->ItemList;
-
-	f.open("Items.txt", std::ios::app);
-
-	if (f)
-	{
-		for (auto item : items)
-		{
-			f.write((char*)&item, sizeof(item));
-			f << std::endl;
-		}
-		f.close();
-	}
-	else
-	{
-		std::cout << "Die. SaveData failed for items";
-	}
-
 
 	f.open("PlayerDataFile.txt", std::ios::app);
 	
 	if (f)
 	{
-		playerData->ItemList = new std::vector<Item>;
-
 		f.write((char*)playerData, sizeof(*playerData));
 
 		f.close();
@@ -75,7 +55,7 @@ void DataManager::LoadData(PlayerData* data)
 		throw std::invalid_argument("No data file found");
 	}
 
-	f.open("Items.txt", std::ios::in);
+	/*f.open("Items.txt", std::ios::in);
 
 	if (f)
 	{
@@ -105,7 +85,7 @@ void DataManager::LoadData(PlayerData* data)
 	else
 	{
 		throw std::invalid_argument("No items file found");
-	}
+	}*/
 
 
 	// If the name or health are invalid arguments, default to these values.

@@ -38,29 +38,26 @@ int main()
 
 	// Game Related Data
 	DataManager data;
-	PlayerData playerData;
+	PlayerData* playerData = new PlayerData;
 	PlayerObj player;
 
 
 	// If player data file exists use it, if not create new player data
 	try
 	{
-		auto temp = &playerData;
-
-		data.LoadData(temp);	// LoadData() Throws an exception if it could not load a player data file which is why
-		                        // we have it in a try-catch. Not neccessary, but an interesting implementation
+		data.LoadData(playerData);	// LoadData() Throws an exception if it could not load a player data file which is why
+									// we have it in a try-catch. Not neccessary, but an interesting implementation
 
 		// If load successful
-		std::cout << "Hello again, " << playerData.playerName << ", you have " << playerData.playerHealth << " HP " 
-			<< "and are level " << playerData.playerLevel << "\n\n";
+		player.SetPlayerData(*playerData); // Handles name and health setting internally
 
-		std::cout << "You're current items are:";
+		std::cout << "Hello again, " << playerData->playerName << ", you have " << playerData->playerHealth << " HP " 
+			<< "and are level " << playerData->playerLevel << "\n\n";
+
 		player.PrintItems();
-
-		player.SetPlayerData(playerData); // Handles name and health setting internally
 		
 		// Sleep for title screen. Otherwise it disappears too quickly
-		Sleep(2500);
+		Sleep(4500);
 	} 
 	catch (...)
 	{
@@ -72,10 +69,10 @@ int main()
 		
 		std::cin >> name;
 
-		playerData.playerName = name;
-		playerData.playerHealth = 15; // Default
+		playerData->playerName = name;
+		playerData->playerHealth = 15; // Default
 
-		player.SetPlayerData(playerData); // Handles name and health setting internally
+		player.SetPlayerData(*playerData); // Handles name and health setting internally
 		player.LevelUp();
 		player.LevelUp();
 	}

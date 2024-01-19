@@ -19,12 +19,13 @@ public:
 	virtual void SetItemCount(int setTo); // Sets count to this number
 	virtual void ChangeItemCount(int changeBy); // Changes count of item(s) within this object
 
-	virtual void SaveData(std::fstream f); // Each class needs to write it's own save data functionality 
-
+	bool IsValid(); // Returns validItem
 
 protected:
 	std::string itemName = "null"; // Default null item (An "Item" class should never be instantiated) 
 	int itemCount = 1; // Default 1
+
+	bool validItem = false; // Flag for pseudo items tagged as not for use
 };
 
 #endif // ITEM_H

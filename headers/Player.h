@@ -10,11 +10,19 @@
 
 struct PlayerData
 {
-	std::string playerName = "default";
-	int playerHealth = -1;
-	int playerLevel = -1;
-	Sword playerSword;
-	std::vector<Item>* ItemList = new std::vector<Item>;
+	std::string playerName = "default"; // Player's current name
+	int playerHealth = -1; // Player's current health
+	int playerLevel = -1; // Player's current level
+
+	Sword playerSword; // Current player sword
+	Coin coins; // Player's coins
+
+	Item itemSlotOne;
+	Item itemSlotTwo;
+	Item itemSlotThree;
+	Item itemSlotFour;
+	Item itemSlotFive;
+	Item itemSlotSix;
 };
 
 class PlayerObj
@@ -23,14 +31,16 @@ public:
 	std::string GetName();
 	int GetHealth();
 	int GetLevel();
-	std::vector<Item>* GetItems();
 	PlayerData* GetPlayerData();
 	
 	int SetPlayerData(PlayerData newData);
 	void SetName(std::string nameToSet);
 	void SetHealth(int newHealth);
-	void AddItem(Item newItem);
+
+	int AddItem(Item newItem);
+	int RemoveItem(int index);
 	void PrintItems();
+
 	void LevelUp();
 
 	PlayerObj(std::string name, int startHealth);

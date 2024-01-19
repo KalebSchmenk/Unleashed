@@ -17,6 +17,7 @@ int Item::GetItemCount()
 void Item::SetItemName(std::string newName)
 {
 	itemName = newName;
+	validItem = true; // If we've set the name, consider the object no longer pseudo
 }
 
 void Item::SetItemCount(int setTo)
@@ -33,15 +34,7 @@ void Item::ChangeItemCount(int changeBy)
 	if (itemCount < 0) itemCount = 0; // An "Item" count should never be negative
 }
 
-void Item::SaveData(std::fstream f)
+bool Item::IsValid()
 {
-	if (f)
-	{
-		f.write((char*)this, sizeof(this));
-		f << std::endl;
-	}
-	else
-	{
-		std::cout << "Item failed to write to file";
-	}
+	return validItem ? true : false;
 }
