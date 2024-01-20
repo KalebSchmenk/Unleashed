@@ -55,38 +55,6 @@ void DataManager::LoadData(PlayerData* data)
 		throw std::invalid_argument("No data file found");
 	}
 
-	/*f.open("Items.txt", std::ios::in);
-
-	if (f)
-	{
-		f.seekg(0);
-		std::string line;
-		while (std::getline(f, line))
-		{
-			std::fstream noShot;
-
-			noShot.open("temp.txt", std::ios::app);
-
-			if (f)
-			{
-				noShot << line.c_str();
-			}
-
-			Item* item = new Item;
-
-			noShot.read((char*)item, sizeof(*item));
-			noShot.close();
-
-			data->ItemList->push_back(*item);
-
-			delete item;
-		}
-	}
-	else
-	{
-		throw std::invalid_argument("No items file found");
-	}*/
-
 
 	// If the name or health are invalid arguments, default to these values.
 	// Does it have to be a try catch? No, but it's interesting to have this be considered an exception

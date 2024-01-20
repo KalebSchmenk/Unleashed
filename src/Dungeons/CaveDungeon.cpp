@@ -18,7 +18,7 @@ DungeonDifficulty CaveDungeon::GetDifficulty()
 }
 
 
-void CaveDungeon::StartDungeon(PlayerObj *player)
+bool CaveDungeon::StartDungeon(PlayerObj *player)
 {
 	system("CLS"); // Clear console (Slow)
 	std::cout << "Welcome to the CAVE DUNGEON!\n\n";
@@ -32,7 +32,7 @@ void CaveDungeon::StartDungeon(PlayerObj *player)
 
 			std::cout << "\nYou're difficulty level is: EASY\n\n";
 			std::cout << "YOU TOOK 1 DAMAGE!\n\n";
-			player->SetHealth(player->GetHealth() - 1);
+			player->TakeDamage(1);
 
 			Sleep(1250);
 
@@ -50,7 +50,7 @@ void CaveDungeon::StartDungeon(PlayerObj *player)
 
 			std::cout << "\nYou're difficulty level is: MEDIUM\n\n";
 			std::cout << "YOU TOOK 5 DAMAGE!\n\n";
-			player->SetHealth(player->GetHealth() - 5);
+			player->TakeDamage(5);
 
 			Sleep(1250);
 
@@ -68,7 +68,8 @@ void CaveDungeon::StartDungeon(PlayerObj *player)
 
 			std::cout << "\nYou're difficulty level is: HARD\n\n";
 			std::cout << "YOU TOOK 10 DAMAGE!\n\n";
-			player->SetHealth(player->GetHealth() - 10);
+			bool alive = player->TakeDamage(10);
+			if (!alive) return false;
 
 			Sleep(1250);
 
@@ -91,4 +92,5 @@ void CaveDungeon::StartDungeon(PlayerObj *player)
 	}
 
 	Sleep(2500);
+	return true; // Player survived
 }

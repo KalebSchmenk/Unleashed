@@ -2,6 +2,7 @@
 // Player Implementation
 
 #include "Player.h"
+#include <windows.h>
 
 // Data struct
 struct PlayerData playerData;
@@ -138,6 +139,9 @@ int PlayerObj::RemoveItem(int index)
 
 void PlayerObj::PrintItems()
 {
+	std::cout << playerData.playerName << "'s inventory\n\n";
+	std::cout << "Health: " << playerData.playerHealth << "\n\n";
+	std::cout << "Level: " << playerData.playerLevel << "\n\n";
 	std::cout << "Current Sword : " << playerData.playerSword.GetItemName() << "\n";
 	std::cout << "Gold Count : " << playerData.coins.GetItemCount() << "\n\n";
 
@@ -199,6 +203,25 @@ void PlayerObj::LevelUp()
 // When the player dies
 void PlayerObj::PlayerDied()
 {
+	system("CLS"); // Clear console (Slow)
+	std::cout << "--=YOU DIED=--";
+
+	Sleep(2500);
+
 	PlayerData newPlayerData;
 	playerData = newPlayerData;
+}
+
+// Player damage intake
+// If player died from attack, return false
+bool PlayerObj::TakeDamage(int damage)
+{
+	playerData.playerHealth -= damage;
+
+	if (playerData.playerHealth <= 0)
+	{
+		PlayerDied();
+		return false;
+	}
+	return true;
 }

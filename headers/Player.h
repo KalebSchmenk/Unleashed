@@ -43,6 +43,7 @@ public:
 
 	void LevelUp();
 
+	bool TakeDamage(int damage);
 	void PlayerDied();
 
 	PlayerObj(std::string name, int startHealth);

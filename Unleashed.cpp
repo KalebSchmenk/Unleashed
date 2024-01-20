@@ -22,6 +22,7 @@ bool AskForConfirmation();
 DataManager data;
 PlayerData* playerData = new PlayerData;
 PlayerObj player;
+bool playGame = true;
 
 
 
@@ -38,16 +39,17 @@ PlayerObj player;
 
 int main()
 {
-	PrintTitle();
-	TryLoadFile();
+	while (playGame)
+	{
+		PrintTitle();
+		TryLoadFile();
 
-
-	//_______________________ 
-	// Game
-	EnterMenuLoop();
-	//_______________________
-
-
+		//_______________________ 
+		// Game
+		EnterMenuLoop();
+		//_______________________
+	}
+	AskToDeleteFile();
 	return 1;
 }
 
@@ -62,13 +64,12 @@ void TryLoadFile()
 		// If load successful
 		player.SetPlayerData(*playerData); // Handles name and health setting internally
 
-		std::cout << "Hello again, " << playerData->playerName << ", you have " << playerData->playerHealth << " HP "
-			<< "and are level " << playerData->playerLevel << "\n\n";
+		std::cout << "Hello again, " << playerData->playerName << "\n\n";
 
 		player.PrintItems();
 
 		// Sleep for title screen. Otherwise it disappears too quickly
-		Sleep(4500);
+		Sleep(7500);
 	}
 	catch (...)
 	{
@@ -82,6 +83,7 @@ void TryLoadFile()
 
 		playerData->playerName = name;
 		playerData->playerHealth = 15; // Default
+		playerData->playerLevel = -1; // Default
 
 		player.SetPlayerData(*playerData); // Handles name and health setting internally
 		player.LevelUp();
@@ -91,6 +93,7 @@ void TryLoadFile()
 
 void PrintTitle()
 {
+	system("CLS"); // Clear console (Slow)
 	std::cout << "===================================================================================================\n\n";
 	std::cout << "                                ______                   _______               ______    ___        \n";
 	std::cout << "|      |   |     |   |         |              /\\        |          |      |   |         |   \\     \n";
@@ -123,43 +126,53 @@ void EnterMenuLoop()
 
 		switch (menuSelect)
 		{
-		case 1:
-		{
-			// Entering a dungeon
-			DungeonDifficulty difficulty = Hard;
-			Dungeon* enteredDungeon = new CaveDungeon(difficulty);
-
-			enteredDungeon->StartDungeon(&player);
-			player.LevelUp();
-			break;
-		}
-		case 2:
-		{
-			system("CLS"); // Clear console (Slow)
-			player.PrintItems();
-			Sleep(2250);
-			break;
-		}
-		case 3:
-		{
-			bool answer = AskForConfirmation();
-			if (answer) 
+			case 1:
 			{
-				player.PlayerDied();
-				data.DeleteData();
+				// Entering a dungeon
+				DungeonDifficulty difficulty = Hard;
+				Dungeon* enteredDungeon = new CaveDungeon(difficulty);
+
+				bool alive = enteredDungeon->StartDungeon(&player);
+			
+				if (!alive) 
+				{
+					data.DeleteData();
+					goodSelect = true;
+					break;
+				}
+
+				player.LevelUp();
+				break;
 			}
-			break;
-		}
-		case 4:
-		{
-			data.SaveData(player.GetPlayerData());
-			goodSelect = true;
-			break;
-		}
-		default:
-		{
-			break;
-		}
+			case 2:
+			{
+				system("CLS"); // Clear console (Slow)
+				player.PrintItems();
+				Sleep(3500);
+				break;
+			}
+			case 3:
+			{
+				bool answer = AskForConfirmation();
+				if (answer) 
+				{
+					player.PlayerDied();
+					data.DeleteData();
+					goodSelect = true;
+				}
+				break;
+			}
+			case 4:
+			{
+				data.SaveData(player.GetPlayerData());
+				playGame = false;
+				goodSelect = true;
+				break;
+			}
+			default:
+			{
+				break;
+			}
 		}
 	} while (goodSelect != true);
 }

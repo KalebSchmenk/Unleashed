@@ -12,7 +12,7 @@ class CaveDungeon : public Dungeon
 {
 public:
 	DungeonDifficulty GetDifficulty() override;
-	void StartDungeon(PlayerObj *player) override;
+	bool StartDungeon(PlayerObj *player) override;
 
 	CaveDungeon(DungeonDifficulty difficulty);
 

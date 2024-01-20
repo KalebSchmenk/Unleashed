@@ -17,7 +17,7 @@ class Dungeon
 {
 public:	
 	virtual DungeonDifficulty GetDifficulty();
-	virtual void StartDungeon(PlayerObj *player);
+	virtual bool StartDungeon(PlayerObj *player);
 
 protected:
 	DungeonDifficulty dungeonDifficulty;
