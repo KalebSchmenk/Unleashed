@@ -43,6 +43,8 @@ public:
 
 	void LevelUp();
 
+	void PlayerDied();
+
 	PlayerObj(std::string name, int startHealth);
 	PlayerObj();
 

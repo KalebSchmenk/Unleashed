@@ -138,7 +138,6 @@ int PlayerObj::RemoveItem(int index)
 
 void PlayerObj::PrintItems()
 {
-	std::cout << "\n";
 	std::cout << "Current Sword : " << playerData.playerSword.GetItemName() << "\n";
 	std::cout << "Gold Count : " << playerData.coins.GetItemCount() << "\n\n";
 
@@ -197,4 +196,9 @@ void PlayerObj::LevelUp()
 	playerData.playerLevel++;
 }
 
-
+// When the player dies
+void PlayerObj::PlayerDied()
+{
+	PlayerData newPlayerData;
+	playerData = newPlayerData;
+}

@@ -11,6 +11,19 @@
 #include "Item Headers/Items.h" // All Items
 
 
+void PrintTitle();
+void TryLoadFile();
+void EnterMenuLoop();
+void AskToDeleteFile();
+bool AskForConfirmation();
+
+
+// Game Related Data
+DataManager data;
+PlayerData* playerData = new PlayerData;
+PlayerObj player;
+
+
 
 	// Enter Intro
 	// Get Player Info
@@ -25,40 +38,38 @@
 
 int main()
 {
-	std::cout << "===================================================================================================\n\n";
-	std::cout << "                                ______                   _______               ______    ___        \n";
-	std::cout << "|      |   |     |   |         |              /\\        |          |      |   |         |   \\     \n";
-	std::cout << "|      |   |\\    |   |         |             /  \\       |          |      |   |         |    \\   \n";
-	std::cout << "|      |   | \\   |   |         |            /    \\      |______    |      |   |         |     \\  \n";
-	std::cout << "|      |   |  \\  |   |         |------     /______\\            |   |------|   |------   |     /   \n";
-	std::cout << "|      |   |   \\ |   |         |          /        \\           |   |      |   |         |    /    \n";
-	std::cout << "|______|   |    \\|   |______   |______   /          \\   _______|   |      |   |______   |___/     \n";
-	std::cout << "\n\n===================================================================================================\n\n";
+	PrintTitle();
+	TryLoadFile();
 
 
-	// Game Related Data
-	DataManager data;
-	PlayerData* playerData = new PlayerData;
-	PlayerObj player;
+	//_______________________ 
+	// Game
+	EnterMenuLoop();
+	//_______________________
 
 
+	return 1;
+}
+
+void TryLoadFile()
+{
 	// If player data file exists use it, if not create new player data
 	try
 	{
 		data.LoadData(playerData);	// LoadData() Throws an exception if it could not load a player data file which is why
-									// we have it in a try-catch. Not neccessary, but an interesting implementation
+		// we have it in a try-catch. Not neccessary, but an interesting implementation
 
 		// If load successful
 		player.SetPlayerData(*playerData); // Handles name and health setting internally
 
-		std::cout << "Hello again, " << playerData->playerName << ", you have " << playerData->playerHealth << " HP " 
+		std::cout << "Hello again, " << playerData->playerName << ", you have " << playerData->playerHealth << " HP "
 			<< "and are level " << playerData->playerLevel << "\n\n";
 
 		player.PrintItems();
-		
+
 		// Sleep for title screen. Otherwise it disappears too quickly
 		Sleep(4500);
-	} 
+	}
 	catch (...)
 	{
 		// If load unsuccessful
@@ -66,7 +77,7 @@ int main()
 
 		std::cout << "Hello new player!\n\n";
 		std::cout << "Please type a name for your character...\n\n";
-		
+
 		std::cin >> name;
 
 		playerData->playerName = name;
@@ -76,15 +87,23 @@ int main()
 		player.LevelUp();
 		player.LevelUp();
 	}
+}
 
+void PrintTitle()
+{
+	std::cout << "===================================================================================================\n\n";
+	std::cout << "                                ______                   _______               ______    ___        \n";
+	std::cout << "|      |   |     |   |         |              /\\        |          |      |   |         |   \\     \n";
+	std::cout << "|      |   |\\    |   |         |             /  \\       |          |      |   |         |    \\   \n";
+	std::cout << "|      |   | \\   |   |         |            /    \\      |______    |      |   |         |     \\  \n";
+	std::cout << "|      |   |  \\  |   |         |------     /______\\            |   |------|   |------   |     /   \n";
+	std::cout << "|      |   |   \\ |   |         |          /        \\           |   |      |   |         |    /    \n";
+	std::cout << "|______|   |    \\|   |______   |______   /          \\   _______|   |      |   |______   |___/     \n";
+	std::cout << "\n\n===================================================================================================\n\n";
+}
 
-	//_______________________
-	//
-	// 
-	// Game
-	// 
-	//_______________________
-	
+void EnterMenuLoop()
+{
 	bool goodSelect = false;
 	int menuSelect;
 
@@ -93,8 +112,9 @@ int main()
 	{
 		system("CLS"); // Clear console (Slow)
 
-		std::cout << "MAIN MENU\n\n";
-		std::cout << "Please select an option\n\n";
+		std::cout << "|--=Unleashed=--|\n\n\n";
+		std::cout << "-MAIN MENU-\n\n";
+		std::cout << "Please select an option";
 		std::cout << "\n1. Enter A Dungeon";
 		std::cout << "\n2. View Inventory";
 		std::cout << "\n3. Delete Character";
@@ -103,48 +123,51 @@ int main()
 
 		switch (menuSelect)
 		{
-			case 1:
+		case 1:
+		{
+			// Entering a dungeon
+			DungeonDifficulty difficulty = Hard;
+			Dungeon* enteredDungeon = new CaveDungeon(difficulty);
+
+			enteredDungeon->StartDungeon(&player);
+			player.LevelUp();
+			break;
+		}
+		case 2:
+		{
+			system("CLS"); // Clear console (Slow)
+			player.PrintItems();
+			Sleep(2250);
+			break;
+		}
+		case 3:
+		{
+			bool answer = AskForConfirmation();
+			if (answer) 
 			{
-				// Entering a dungeon
-				DungeonDifficulty difficulty = Hard;
-				Dungeon* enteredDungeon = new CaveDungeon(difficulty);
-				
-				enteredDungeon->StartDungeon(&player);
-				player.LevelUp();
-				break;
+				player.PlayerDied();
+				data.DeleteData();
 			}
-			case 2:
-			{
-				system("CLS"); // Clear console (Slow)
-				player.PrintItems();
-				Sleep(2250);
-				break;
-			}
-			case 3:
-			{
-				std::cout << "Delete character not implemented";
-				break;
-			}
-			case 4:
-			{
-				data.SaveData(player.GetPlayerData());
-				goodSelect = true;
-				break;
-			}
-			default:
-			{
-				break;
-			}
+			break;
+		}
+		case 4:
+		{
+			data.SaveData(player.GetPlayerData());
+			goodSelect = true;
+			break;
+		}
+		default:
+		{
+			break;
+		}
 		}
 	} while (goodSelect != true);
-	
-	
-	//_______________________
+}
 
-
-
+void AskToDeleteFile()
+{
 	std::cout << "\n\nDelete saved file? (y/n)\n";
-	
+
 	char answer;
 	std::cin >> answer;
 
@@ -154,7 +177,22 @@ int main()
 		std::cin >> answer;
 	}
 	if (answer == 'y') data.DeleteData();
-
-	return 1;
 }
 
+bool AskForConfirmation()
+{
+	std::cout << "\n\nDelete character? (y/n)\n";
+
+	char answer;
+	std::cin >> answer;
+
+	while (answer != 'y' && answer != 'n')
+	{
+		std::cout << "\n\nSorry, didn't catch that. Delete character? (y/n)\n";
+		std::cin >> answer;
+	}
+
+	if (answer == 'y') return true;
+
+	return false;
+}
