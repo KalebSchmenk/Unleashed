@@ -3,6 +3,8 @@
 
 #include "Dungeon Headers/CaveDungeon.h"
 #include "Item Headers/Items.h"
+#include "Enemy Headers/Enemies.h"
+#include "Duel.h"
 #include <windows.h>
 
 
@@ -22,68 +24,76 @@ bool CaveDungeon::StartDungeon(PlayerObj *player)
 {
 	system("CLS"); // Clear console (Slow)
 	std::cout << "Welcome to the CAVE DUNGEON!\n\n";
+	Sleep(2500);
+
+	this->player = player;
+	Duel* duel;
 
 	switch(dungeonDifficulty)
 	{
 		case Easy:
 		{
-			Sleep(1250);
+			Item coins = Coin(3);
+			SkeletonEnemy* enemy = new SkeletonEnemy("Skeleton",10, 1, coins);
 
-			std::cout << "\nYou're difficulty level is: EASY\n\n";
-			std::cout << "YOU TOOK 1 DAMAGE!\n\n";
-			player->TakeDamage(1);
+			duel = new Duel(player, enemy);
+			duel->StartDuel();
 
-			Sleep(1250);
-
-			std::cout << "You found 5 gold and a sword!";
-			Coin coins(5);
-			Sword sword;
-			sword.SetItemName("Sword");
-			player->AddItem(coins);
-			player->AddItem(sword);
+			if (duel->playerWon == false && duel->enemyWon == false)
+			{
+				EndDungeon();
+			}
+			else if (duel->playerWon == true && duel->enemyWon == false)
+			{
+				player->AddItem(enemy->Die());
+				EndDungeon();
+			}
+			else // Assume enemy won
+			{
+				player->PlayerDied();
+				EndDungeon();
+				return false;
+			}
 			break;
 		}
 		case Medium:
 		{
-			Sleep(1250);
+			Item coins = Coin(5);
+			SkeletonEnemy* enemy = new SkeletonEnemy("Skeleton", 15, 2, coins);
 
-			std::cout << "\nYou're difficulty level is: MEDIUM\n\n";
-			std::cout << "YOU TOOK 5 DAMAGE!\n\n";
-			player->TakeDamage(5);
+			duel = new Duel(player, enemy);
+			duel->StartDuel();
 
-			Sleep(1250);
-
-			std::cout << "You found 5 gold and a sword!";
-			Coin coins(5);
-			Sword sword;
-			sword.SetItemName("Sword");
-			player->AddItem(coins);
-			player->AddItem(sword);
+			if (duel->playerWon)
+			{
+				player->AddItem(enemy->Die());
+				EndDungeon();
+			}
+			else // Assume enemy won
+			{
+				player->PlayerDied();
+				return false;
+			}
 			break;
 		}	
 		case Hard:
 		{
-			Sleep(1250);
+			Item coins = Coin(10);
+			SkeletonEnemy* enemy = new SkeletonEnemy("Skeleton", 20, 4, coins);
 
-			std::cout << "\nYou're difficulty level is: HARD\n\n";
-			std::cout << "YOU TOOK 10 DAMAGE!\n\n";
-			bool alive = player->TakeDamage(10);
-			if (!alive) return false;
+			duel = new Duel(player, enemy);
+			duel->StartDuel();
 
-			Sleep(1250);
-
-			std::cout << "You found 5 gold and a sword!\n\n";
-			Sword sword;
-			sword.SetItemName("Iron Sword");
-			player->GetPlayerData()->playerSword = sword;
-			player->GetPlayerData()->coins.ChangeItemCount(5);
-
-			Sleep(1250);
-
-			std::cout << "You also found a mysterious black orb!\n\n";
-			Item item;
-			item.SetItemName("Black Orb");
-			player->AddItem(item);
+			if (duel->playerWon)
+			{
+				player->AddItem(enemy->Die());
+				EndDungeon();
+			}
+			else // Assume enemy won
+			{
+				player->PlayerDied();
+				return false;
+			}
 			break;
 		}
 		default:
@@ -92,4 +102,9 @@ bool CaveDungeon::StartDungeon(PlayerObj *player)
 
 	Sleep(2500);
 	return true; // Player survived
+}
+
+bool CaveDungeon::EndDungeon()
+{
+	return (player->GetHealth() <= 0) ? true : false;
 }

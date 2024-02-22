@@ -13,3 +13,8 @@ bool Dungeon::StartDungeon(PlayerObj *player)
 {
 	throw std::invalid_argument("Base class used instead of derivitive to generate dungeon");
 }
+
+bool Dungeon::EndDungeon()
+{
+	return true;
+}

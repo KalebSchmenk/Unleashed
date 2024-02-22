@@ -4,18 +4,21 @@
 #define BASE_ENEMY_H
 
 #include "Player.h"
-#include "Item Headers/Items.h"
+#include "Item Headers\Items.h"
 #include <stdlib.h>
 #include <iostream>
 
 class BaseEnemy
 {
 public:
-	virtual void Attack(PlayerObj *player);
+	virtual int Attack(PlayerObj *player);
 	virtual void TakeDamage(int damage);
+	int GetHealth();
+	std::string GetName();
 	virtual Item Die();
 
 protected:
+	std::string name;
 	int health;
 	int damageOutput;
 	Item itemToDrop;

@@ -5,3 +5,4 @@
 // Will need to be continuously updated when more enemies are added
 
 #include "BaseEnemy.h"
+#include "Enemy Headers/SkeletonEnemy.h"

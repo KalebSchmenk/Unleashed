@@ -2,14 +2,15 @@
 // Base Sword Implementation
 
 #include "Item Headers/Sword Headers/Sword.h"
+#include "Enemy Headers/BaseEnemy.h"
 
 Sword::Sword()
 {
 	SetItemName("Wooden Sword");
 }
 
-// TODO
-void Sword::Attack()
+int Sword::Attack(BaseEnemy* enemy)
 {
-	std::cout << "You attack something! TODO";
+	enemy->TakeDamage(damageOutput);
+	return damageOutput;
 }

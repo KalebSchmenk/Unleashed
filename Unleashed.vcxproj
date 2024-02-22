@@ -72,15 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PublicIncludeDirectories>$(ProjectDir)headers;$(ProjectDir)src;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PublicIncludeDirectories>$(ProjectDir)headers;$(ProjectDir)src;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PublicIncludeDirectories>$(ProjectDir)headers;$(ProjectDir)src;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PublicIncludeDirectories>$(ProjectDir)headers;$(ProjectDir)src;$(PublicIncludeDirectories)</PublicIncludeDirectories>
+    <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -89,7 +93,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Item Headers;$(ProjectDir)Dungeon Headers;$(ProjectDir)headers;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Enemy Headers;$(ProjectDir)Item Headers;$(ProjectDir)Dungeon Headers;$(ProjectDir)headers;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,7 +109,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Item Headers;$(ProjectDir)Dungeon Headers;$(ProjectDir)headers;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Enemy Headers;$(ProjectDir)Item Headers;$(ProjectDir)Dungeon Headers;$(ProjectDir)headers;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -121,7 +125,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Item Headers;$(ProjectDir)Dungeon Headers;$(ProjectDir)headers;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Enemy Headers;$(ProjectDir)Item Headers;$(ProjectDir)Dungeon Headers;$(ProjectDir)headers;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,7 +141,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Item Headers;$(ProjectDir)Dungeon Headers;$(ProjectDir)headers;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Enemy Headers;$(ProjectDir)Item Headers;$(ProjectDir)Dungeon Headers;$(ProjectDir)headers;$(ProjectDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,8 +151,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Duel.cpp" />
+    <ClCompile Include="src\Enemies\BaseEnemy.cpp" />
     <ClCompile Include="src\Dungeon.cpp" />
     <ClCompile Include="src\Dungeons\CaveDungeon.cpp" />
+    <ClCompile Include="src\Enemies\SkeletonEnemy.cpp" />
     <ClCompile Include="src\FileManager.cpp" />
     <ClCompile Include="src\Items\Coin.cpp" />
     <ClCompile Include="src\Items\Item.cpp" />
@@ -157,9 +164,13 @@
     <ClCompile Include="Unleashed.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\Duel.h" />
     <ClInclude Include="headers\Dungeon Headers\CaveDungeon.h" />
     <ClInclude Include="headers\Dungeon Headers\Dungeons.h" />
     <ClInclude Include="headers\Dungeon Headers\Dungeon.h" />
+    <ClInclude Include="headers\Enemy Headers\BaseEnemy.h" />
+    <ClInclude Include="headers\Enemy Headers\Enemies.h" />
+    <ClInclude Include="headers\Enemy Headers\SkeletonEnemy.h" />
     <ClInclude Include="headers\FileManager.h" />
     <ClInclude Include="headers\Item Headers\Coin.h" />
     <ClInclude Include="headers\Item Headers\Items.h" />

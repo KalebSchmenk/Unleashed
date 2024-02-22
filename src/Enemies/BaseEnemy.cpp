@@ -3,9 +3,10 @@
 
 #include "Enemy Headers/BaseEnemy.h"
 
-void BaseEnemy::Attack(PlayerObj *player)
+int BaseEnemy::Attack(PlayerObj *player)
 {
 	// Do Damage to player
+	return 0;
 }
 
 void BaseEnemy::TakeDamage(int damage)
@@ -16,4 +17,16 @@ void BaseEnemy::TakeDamage(int damage)
 Item BaseEnemy::Die()
 {
 	// Die and drop item
+	Item item;
+	return item;
+}
+
+int BaseEnemy::GetHealth()
+{
+	return health;
+}
+
+std::string BaseEnemy::GetName()
+{
+	return name;
 }
