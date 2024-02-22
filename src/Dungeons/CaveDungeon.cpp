@@ -23,7 +23,6 @@ bool CaveDungeon::StartDungeon(PlayerObj *player)
 	system("CLS"); // Clear console (Slow)
 	std::cout << "Welcome to the CAVE DUNGEON!\n\n";
 
-	// lol
 	switch(dungeonDifficulty)
 	{
 		case Easy:

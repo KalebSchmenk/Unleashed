@@ -13,9 +13,11 @@ class Item
 {
 public:
 	virtual std::string GetItemName(); // Returns item name
+	virtual std::string GetItemDescription(); // Returns item description
 	virtual int GetItemCount(); // Returns how many of this "item" is within this class object. (A "Coin" item may contain more than 1 coin in the class)
 
 	virtual void SetItemName(std::string newName);// Sets new item name
+	virtual void SetItemDescription(std::string newDescription);// Sets new item description
 	virtual void SetItemCount(int setTo); // Sets count to this number
 	virtual void ChangeItemCount(int changeBy); // Changes count of item(s) within this object
 
@@ -23,6 +25,7 @@ public:
 
 protected:
 	std::string itemName = "null"; // Default null item (An "Item" class should never be instantiated) 
+	std::string itemDescription = "null"; // Default null description
 	int itemCount = 1; // Default 1
 
 	bool validItem = false; // Flag for pseudo items tagged as not for use
