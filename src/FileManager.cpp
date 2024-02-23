@@ -2,12 +2,19 @@
 // Player data file manager implementation
 
 #include "FileManager.h"
+#include <filesystem>
 
 
 // Saves player data to .dat file
 void DataManager::SaveData(PlayerData* playerData)
 {
 	std::fstream f;
+
+	// If a file exists delete it, we are overriding it
+	if (std::filesystem::exists("PlayerDataFile.txt"))
+	{
+		DeleteData();
+	}
 
 	f.open("PlayerDataFile.txt", std::ios::app);
 	
