@@ -25,8 +25,5 @@ public:
 
 	PlayerObj* player;
 	BaseEnemy* enemy;
-
-	std::string playerName;
-	std::string enemyName;
 };
 #endif

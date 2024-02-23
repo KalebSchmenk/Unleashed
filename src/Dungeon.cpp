@@ -18,3 +18,19 @@ bool Dungeon::EndDungeon()
 {
 	return true;
 }
+
+void Dungeon::SelectDifficulty()
+{
+	std::cout << "What difficulty do you want this dungeon?\n\n";
+
+	std::cout << "Options:\n";
+	std::cout << "1. Easy\n";
+	std::cout << "2. Medium\n";
+	std::cout << "3. Hard\n\n";
+
+	int selection;
+
+	std::cin >> selection;
+
+	this->dungeonDifficulty = (DungeonDifficulty)selection;
+}

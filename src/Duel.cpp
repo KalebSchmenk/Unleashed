@@ -8,15 +8,14 @@ Duel::Duel(PlayerObj* player, BaseEnemy* enemy)
 {
 	this->player = player;
 	this->enemy = enemy;
-	this->playerName = player->GetName();
-	this->enemyName = enemy->GetName();
 }
 
 void Duel::StartDuel()
 {
 	system("CLS"); // Clear console (Slow)
-	std::cout << "You've come across a " + enemyName + "!\n\n";
+	std::cout << "You've come across a(n) " << enemy->GetName() << "!\n\n";
 	std::cout << "You charge at them ready to fight!";
+
 	Sleep(4500);
 	PlayerTurn();
 
@@ -41,7 +40,6 @@ void Duel::PlayerTurn()
 	// Ask to attack or run away
 	int selection;
 	std::cin >> selection;
-	std::cout.flush();
 
 	int damage;
 	
@@ -50,18 +48,16 @@ void Duel::PlayerTurn()
 	case 1:
 		damage = player->GetPlayerData()->playerSword.Attack(enemy);
 
-		std::cout << "\n";
-		std::cout << "You dealt ";
-		std::cout << damage;
-		std::cout << " damage to the enemy!";
+		std::cout << "\n" << "You dealt " << damage << " damage to the enemy!";
 
-		Sleep(1500);
+		Sleep(2500);
 
 		break;
 
 	case 2:
 		// run away
-		playerWon = true;
+		playerWon = false;
+		enemyWon = false;
 		return;
 	}
 
@@ -82,13 +78,9 @@ void Duel::EnemyTurn()
 
 	int damage = enemy->Attack(player);
 
-	std::cout << "The ";
-	std::cout << enemyName;
-	std::cout << " attacks you dealing ";
-	std::cout << damage;
-	std::cout << " damage!";
+	std::cout << "The " << enemy->GetName() << " attacks you dealing " << damage << " damage!";
 
-	Sleep(1500);
+	Sleep(2500);
 
 	if (player->GetHealth() <= 0)
 	{
@@ -101,15 +93,10 @@ void Duel::EnemyTurn()
 
 void Duel::PrintStats()
 {
-	std::cout << "BATTLE STATS\n\n\n";
+	std::cout << "========================\n";
+	std::cout << "BATTLE INFO\n\n\n";
 
-	// Why do I have to do this? It just prints nothing if I dont do it this way...
-	int pHealth = player->GetHealth();
-	std::cout << playerName + " health: ";
-	std::cout << pHealth;
+	std::cout << player->GetName() << "'s health: " << player->GetHealth() << "\n\n";
 
-	std::cout << "\n\n";
-	std::cout << enemyName + " health: ";
-	std::cout << enemy->GetHealth();
-	std::cout << "\n\n\n";
+	std::cout << enemy->GetName() << "'s health: " << enemy->GetHealth() << "\n\n\n";
 }

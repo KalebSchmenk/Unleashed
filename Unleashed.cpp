@@ -25,18 +25,7 @@ PlayerObj player;
 bool playGame = true;
 
 
-
-	// Enter Intro
-	// Get Player Info
-	// Create init player obj
-	// Save init player obj
-	// Open Main Menu
-	// Only allow first level tutorial selection
-	// Enter tutorial version of game loop
-	// Exit to main menu
-	// Begin tutorial version of main menu loop
-	// Let player begin journey 
-
+// Game Entrance
 int main()
 {
 	while (playGame)
@@ -53,6 +42,7 @@ int main()
 	return 1;
 }
 
+// Tries to load a game file
 void TryLoadFile()
 {
 	// If player data file exists use it, if not create new player data
@@ -79,7 +69,7 @@ void TryLoadFile()
 		std::cout << "Hello new player!\n\n";
 		std::cout << "Please type a name for your character...\n\n";
 
-		std::cin >> name;
+		std::getline(std::cin, name);
 
 		playerData->playerName = name;
 		playerData->playerHealth = 15; // Default
@@ -91,10 +81,11 @@ void TryLoadFile()
 	}
 }
 
+// Prints title card
 void PrintTitle()
 {
 	system("CLS"); // Clear console (Slow)
-	std::cout << "===================================================================================================\n\n";
+	std::cout << "================================================================================================\n\n";
 	std::cout << "                                ______                   _______               ______    ___        \n";
 	std::cout << "|      |   |     |   |         |              /\\        |          |      |   |         |   \\     \n";
 	std::cout << "|      |   |\\    |   |         |             /  \\       |          |      |   |         |    \\   \n";
@@ -102,9 +93,10 @@ void PrintTitle()
 	std::cout << "|      |   |  \\  |   |         |------     /______\\            |   |------|   |------   |     /   \n";
 	std::cout << "|      |   |   \\ |   |         |          /        \\           |   |      |   |         |    /    \n";
 	std::cout << "|______|   |    \\|   |______   |______   /          \\   _______|   |      |   |______   |___/     \n";
-	std::cout << "\n\n===================================================================================================\n\n";
+	std::cout << "\n\n================================================================================================\n\n";
 }
 
+// Enters menu loop
 void EnterMenuLoop()
 {
 	bool goodSelect = false;
@@ -114,7 +106,12 @@ void EnterMenuLoop()
 	do
 	{
 		system("CLS"); // Clear console (Slow)
+		//data.SaveData(player.GetPlayerData());
 
+		// Debug
+		player.SetHealth(15);
+		//
+		std::cout << "=================\n";
 		std::cout << "|--=Unleashed=--|\n\n\n";
 		std::cout << "-MAIN MENU-\n\n";
 		std::cout << "Please select an option";
@@ -129,7 +126,7 @@ void EnterMenuLoop()
 			case 1:
 			{
 				// Entering a dungeon
-				DungeonDifficulty difficulty = Hard;
+				DungeonDifficulty difficulty = Easy;
 				Dungeon* enteredDungeon = new CaveDungeon(difficulty);
 
 				bool alive = enteredDungeon->StartDungeon(&player);
@@ -149,6 +146,9 @@ void EnterMenuLoop()
 				system("CLS"); // Clear console (Slow)
 				player.PrintItems();
 				Sleep(3500);
+				std::cout << "\n\nType anything to leave...\n\n";
+				int exit = -1;
+				std::cin >> exit;
 				break;
 			}
 			case 3:
@@ -177,6 +177,7 @@ void EnterMenuLoop()
 	} while (goodSelect != true);
 }
 
+// Asks the player if they want to delete the save file
 void AskToDeleteFile()
 {
 	std::cout << "\n\nDelete saved file? (y/n)\n";
@@ -192,6 +193,7 @@ void AskToDeleteFile()
 	if (answer == 'y') data.DeleteData();
 }
 
+// Asks for confirmation on deleting a character
 bool AskForConfirmation()
 {
 	std::cout << "\n\nDelete character? (y/n)\n";

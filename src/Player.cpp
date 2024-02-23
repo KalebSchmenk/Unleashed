@@ -139,6 +139,7 @@ int PlayerObj::RemoveItem(int index)
 
 void PlayerObj::PrintItems()
 {
+	std::cout << "===========================================\n";
 	std::cout << playerData.playerName << "'s inventory\n\n";
 	std::cout << "Health: " << playerData.playerHealth << "\n\n";
 	std::cout << "Level: " << playerData.playerLevel << "\n\n";
@@ -204,7 +205,9 @@ void PlayerObj::LevelUp()
 void PlayerObj::PlayerDied()
 {
 	system("CLS"); // Clear console (Slow)
-	std::cout << "--=YOU DIED=--";
+	std::cout << "===========================================\n";
+	std::cout << "|            --=YOU DIED=--               |\n";
+	std::cout << "==========================================="  ;
 
 	Sleep(2500);
 
@@ -220,7 +223,7 @@ bool PlayerObj::TakeDamage(int damage)
 
 	if (playerData.playerHealth <= 0)
 	{
-		PlayerDied();
+		//PlayerDied();
 		return false;
 	}
 	return true;
