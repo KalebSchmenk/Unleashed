@@ -6,28 +6,57 @@
 
 
 // Saves player data to .dat file
-void DataManager::SaveData(PlayerData* playerData)
+void DataManager::SaveData(PlayerData& data)
 {
-	std::fstream f;
+	data.playerSword.SaveItem();
+	data.itemSlotOne.SaveItem();
+	data.itemSlotTwo.SaveItem();
+	data.itemSlotThree.SaveItem();
+	data.itemSlotFour.SaveItem();
+	data.itemSlotFive.SaveItem();
+	data.itemSlotSix.SaveItem();
 
-	// If a file exists delete it, we are overriding it
-	if (std::filesystem::exists("PlayerDataFile.txt"))
+
+
+	const PlayerData newData = data;
+
+	std::ofstream outputFile("PlayerDataFile.txt", std::ios::binary);
+
+	if (!outputFile.is_open())
 	{
-		DeleteData();
+		std::cerr << "Error opening file for writing: " << "PlayerDataFile.txt" << std::endl;
+		return;
 	}
 
-	f.open("PlayerDataFile.txt", std::ios::app);
+	// Write the PlayerData struct to the file
+	outputFile.write(reinterpret_cast<const char*>(&newData), sizeof(PlayerData));
+
+	outputFile.close();
+
 	
-	if (f)
-	{
-		f.write((char*)playerData, sizeof(*playerData));
 
-		f.close();
-	}
-	else
-	{
-		throw std::invalid_argument("Couldn't open a new file");
-	}
+
+
+	//std::fstream f;
+
+	//// If a file exists delete it, we are overriding it
+	//if (std::filesystem::exists("PlayerDataFile.txt"))
+	//{
+	//	DeleteData();
+	//}
+
+	//f.open("PlayerDataFile.txt", std::ios::app);
+	//
+	//if (f)
+	//{
+	//	f.write((char*)playerData, sizeof(*playerData));
+
+	//	f.close();
+	//}
+	//else
+	//{
+	//	throw std::invalid_argument("Couldn't open a new file");
+	//}
 }
 
 // Deletes player .dat data file
@@ -45,11 +74,43 @@ int DataManager::DeleteData()
 }
 
 // Loads data
-void DataManager::LoadData(PlayerData* data)
+void DataManager::LoadData(PlayerData& data)
 {
-	std::fstream f;
+	std::ifstream inputFile("PlayerDataFile.txt", std::ios::binary);
 
-	f.open("PlayerDataFile.txt", std::ios::in);
+	if (!inputFile.is_open())
+	{
+		//std::cerr << "Error opening file for reading: " << "PlayerDataFile.txt" << std::endl;
+		throw std::invalid_argument("No data file found");
+
+		return;
+	}
+
+	// Read the PlayerData struct from the file
+	inputFile.read(reinterpret_cast<char*>(&data), sizeof(PlayerData));
+
+	inputFile.close();
+
+	// wow
+	Item* sword = data.playerSword.LoadItem();
+	Sword* newSword = dynamic_cast<Sword*>(sword);
+	data.playerSword = *newSword;
+
+	data.itemSlotOne = *data.itemSlotOne.LoadItem();
+	data.itemSlotTwo = *data.itemSlotTwo.LoadItem();
+	data.itemSlotThree = *data.itemSlotThree.LoadItem();
+	data.itemSlotFour = *data.itemSlotFour.LoadItem();
+	data.itemSlotFive = *data.itemSlotFive.LoadItem();
+	data.itemSlotSix = *data.itemSlotSix.LoadItem();
+
+
+
+
+
+
+	//std::fstream f;
+
+	/*f.open("PlayerDataFile.txt", std::ios::in);
 
 	if(f)
 	{
@@ -60,26 +121,26 @@ void DataManager::LoadData(PlayerData* data)
 	else
 	{
 		throw std::invalid_argument("No data file found");
-	}
+	}*/
 
 
 	// If the name or health are invalid arguments, default to these values.
 	// Does it have to be a try catch? No, but it's interesting to have this be considered an exception
 	try
 	{
-		if (data->playerName.compare("") == 0) throw std::invalid_argument("Name was empty");
+		if (data.playerName.compare("") == 0) throw std::invalid_argument("Name was empty");
 	}
 	catch (const std::invalid_argument& e)
 	{
-		data->playerName = "Phoenix";
+		data.playerName = "Phoenix";
 	}
 	try
 	{
-		if (data->playerHealth == -1) throw std::invalid_argument("Health was never overriden");
+		if (data.playerHealth == -1) throw std::invalid_argument("Health was never overriden");
 	}
 	catch (const std::invalid_argument& e)
 	{
-		data->playerHealth = 15;
+		data.playerHealth = 15;
 	}
 }
 

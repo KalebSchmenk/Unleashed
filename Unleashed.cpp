@@ -20,7 +20,7 @@ bool AskForConfirmation();
 
 // Game Related Data
 DataManager data;
-PlayerData* playerData = new PlayerData;
+PlayerData* playerData = new PlayerData();
 PlayerObj player;
 bool playGame = true;
 
@@ -48,8 +48,10 @@ void TryLoadFile()
 	// If player data file exists use it, if not create new player data
 	try
 	{
-		data.LoadData(playerData);	// LoadData() Throws an exception if it could not load a player data file which is why
+		data.LoadData(*playerData);	// LoadData() Throws an exception if it could not load a player data file which is why
 		// we have it in a try-catch. Not neccessary, but an interesting implementation
+
+		playerData->playerSword.GetItemName();
 
 		// If load successful
 		player.SetPlayerData(*playerData); // Handles name and health setting internally
@@ -106,11 +108,11 @@ void EnterMenuLoop()
 	do
 	{
 		system("CLS"); // Clear console (Slow)
-		//data.SaveData(player.GetPlayerData());
 
 		// Debug
 		player.SetHealth(15);
 		//
+
 		std::cout << "=================\n";
 		std::cout << "|--=Unleashed=--|\n\n\n";
 		std::cout << "-MAIN MENU-\n\n";
@@ -164,7 +166,7 @@ void EnterMenuLoop()
 			}
 			case 4:
 			{
-				data.SaveData(player.GetPlayerData());
+				data.SaveData(*(player.GetPlayerData()));
 				playGame = false;
 				goodSelect = true;
 				break;

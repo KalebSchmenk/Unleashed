@@ -5,7 +5,7 @@
 #include <windows.h>
 
 // Data struct
-struct PlayerData playerData;
+extern struct PlayerData playerData;
 
 
 // Player constructor
@@ -60,31 +60,37 @@ int PlayerObj::AddItem(Item newItem)
 	if (!playerData.itemSlotOne.IsValid())
 	{
 		playerData.itemSlotOne = newItem;
+		playerData.itemSlotOne.filePath = "ItemOne.txt";
 		return 1;
 	}
 	else if (!playerData.itemSlotTwo.IsValid())
 	{
 		playerData.itemSlotTwo = newItem;
+		playerData.itemSlotTwo.filePath = "ItemTwo.txt";
 		return 1;
 	}
 	else if (!playerData.itemSlotThree.IsValid())
 	{
 		playerData.itemSlotThree = newItem;
+		playerData.itemSlotThree.filePath = "ItemThree.txt";
 		return 1;
 	}
 	else if (!playerData.itemSlotFour.IsValid())
 	{
 		playerData.itemSlotFour = newItem;
+		playerData.itemSlotFour.filePath = "ItemFour.txt";
 		return 1;
 	}
 	else if (!playerData.itemSlotFive.IsValid())
 	{
 		playerData.itemSlotFive = newItem;
+		playerData.itemSlotFive.filePath = "ItemFive.txt";
 		return 1;
 	}
 	else if (!playerData.itemSlotSix.IsValid())
 	{
 		playerData.itemSlotSix = newItem;
+		playerData.itemSlotSix.filePath = "ItemSix.txt";
 		return 1;
 	}
 	else
