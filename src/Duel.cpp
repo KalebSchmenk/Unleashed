@@ -2,7 +2,6 @@
 // Duel Implementation
 
 #include "Duel.h"
-#include <windows.h>
 
 Duel::Duel(PlayerObj* player, BaseEnemy* enemy)
 {
@@ -29,44 +28,68 @@ void Duel::EndDuel()
 
 void Duel::PlayerTurn()
 {
-	system("CLS"); // Clear console (Slow)
-	PrintStats();
-	std::cout.flush();
-
-	std::cout << "Options:\n\n";
-	std::cout << "1. Attack with your sword\n";
-	std::cout << "2. Run away!\n\n";
-
-	// Ask to attack or run away
-	int selection;
-	std::cin >> selection;
-
-	int damage;
-	
-	switch (selection)
+	bool goodSelection = false;
+	do
 	{
-	case 1:
-		damage = player->GetPlayerData()->playerSword.Attack(enemy);
+		system("CLS"); // Clear console (Slow)
+		PrintStats();
+		std::cout.flush();
 
-		std::cout << "\n" << "You dealt " << damage << " damage to the enemy!";
+		std::cout << "Options:\n\n";
+		std::cout << "1. Attack with your sword\n";
+		std::cout << "2. Run away!\n\n";
+		
+		int damage;
 
-		Sleep(2500);
+		// Ask to attack or run away
+		std::string selectionString;
+		std::cin >> selectionString;
+		int selection;
 
-		break;
+		try
+		{
+			selection = std::stoi(selectionString);
+		}
+		catch (...)
+		{
+			selection = 10; // Not accepted input
+		}
 
-	case 2:
-		// run away
-		playerWon = false;
-		enemyWon = false;
-		return;
-	}
+
+		switch (selection)
+		{
+			case 1:
+				damage = player->GetPlayerData()->playerSword.Attack(enemy);
+
+				std::cout << "\n" << "You dealt " << damage << " damage to the enemy!";
+
+				goodSelection = true;
+
+				Sleep(2500);
+
+				break;
+
+			case 2:
+				// run away
+				playerWon = false;
+				enemyWon = false;
+				goodSelection = true;
+				return;
+
+			default: // Loop
+			{
+				std::cout << "\n\nSorry, couldn't catch that. Please enter a menu option\n\n";
+				Sleep(1750);
+			}
+		}		
+	} while (!goodSelection);
+
 
 	if (enemy->GetHealth() <= 0)
 	{
 		playerWon = true;
 		return;
 	}
-
 
 	EnemyTurn();
 }

@@ -51,8 +51,6 @@ void TryLoadFile()
 		data.LoadData(*playerData);	// LoadData() Throws an exception if it could not load a player data file which is why
 		// we have it in a try-catch. Not neccessary, but an interesting implementation
 
-		playerData->playerSword.GetItemName();
-
 		// If load successful
 		player.SetPlayerData(*playerData); // Handles name and health setting internally
 
@@ -70,6 +68,8 @@ void TryLoadFile()
 
 		std::cout << "Hello new player!\n\n";
 		std::cout << "Please type a name for your character...\n\n";
+		
+		std::cin.ignore(std::cin.rdbuf()->in_avail()); // Clear buffer
 
 		std::getline(std::cin, name);
 
@@ -102,7 +102,8 @@ void PrintTitle()
 void EnterMenuLoop()
 {
 	bool goodSelect = false;
-	int menuSelect;
+	std::string menuSelect;
+	int selection;
 
 	// Menu select loop
 	do
@@ -121,11 +122,21 @@ void EnterMenuLoop()
 		std::cout << "\n2. View Inventory";
 		std::cout << "\n3. Delete Character";
 		std::cout << "\n4. Quit\n\n";
+		
 		std::cin >> menuSelect;
 
-		switch (menuSelect)
+		try
 		{
-			case 1:
+			selection = std::stoi(menuSelect);
+		} 
+		catch (...)
+		{
+			selection = 10; // Not accepted input
+		}
+
+		switch (selection)
+		{
+			case 1: // Go to a dungeon
 			{
 				// Entering a dungeon
 				DungeonDifficulty difficulty = Easy; // Default easy, player will select
@@ -135,45 +146,50 @@ void EnterMenuLoop()
 			
 				if (!alive) 
 				{
-					data.DeleteData();
+					data.DeleteData(*player.GetPlayerData());
 					goodSelect = true;
 					break;
 				}
 
-				player.LevelUp();
 				break;
 			}
-			case 2:
+			case 2: // Open Inventory
 			{
 				system("CLS"); // Clear console (Slow)
 				player.PrintItems();
 				Sleep(3500);
+				
 				std::cout << "\n\nType anything to leave...\n\n";
-				int exit = -1;
+				
+				std::string exit = "";
 				std::cin >> exit;
 				break;
 			}
-			case 3:
+			case 3: // Delete Character
 			{
 				bool answer = AskForConfirmation();
 				if (answer) 
 				{
 					player.PlayerDied();
-					data.DeleteData();
+					data.DeleteData(*player.GetPlayerData());
+
+					playerData = new PlayerData();
+
 					goodSelect = true;
 				}
 				break;
 			}
-			case 4:
+			case 4: // Quit game
 			{
 				data.SaveData(*(player.GetPlayerData()));
 				playGame = false;
 				goodSelect = true;
 				break;
 			}
-			default:
+			default: // Loop
 			{
-				break;
+				std::cout << "\n\nSorry, couldn't catch that. Please enter a menu option\n\n";
+				Sleep(1750);
 			}
 		}
 	} while (goodSelect != true);
@@ -184,15 +200,18 @@ void AskToDeleteFile()
 {
 	std::cout << "\n\nDelete saved file? (y/n)\n";
 
-	char answer;
+	std::string answer;
 	std::cin >> answer;
 
-	while (answer != 'y' && answer != 'n')
+	while (!(answer.compare("y") == 0) && !(answer.compare("n") == 0))
 	{
 		std::cout << "\n\nSorry, didn't catch that. Delete saved file? (y/n)\n";
 		std::cin >> answer;
 	}
-	if (answer == 'y') data.DeleteData();
+	if (answer.compare("y") == 0) data.DeleteData(*player.GetPlayerData());
+
+	std::cin.clear();
+	std::cin.sync();
 }
 
 // Asks for confirmation on deleting a character
@@ -200,16 +219,16 @@ bool AskForConfirmation()
 {
 	std::cout << "\n\nDelete character? (y/n)\n";
 
-	char answer;
+	std::string answer;
 	std::cin >> answer;
 
-	while (answer != 'y' && answer != 'n')
+	while (!(answer.compare("y") == 0) && !(answer.compare("n") == 0))
 	{
 		std::cout << "\n\nSorry, didn't catch that. Delete character? (y/n)\n";
 		std::cin >> answer;
 	}
 
-	if (answer == 'y') return true;
+	if (answer.compare("y") == 0) return true;
 
 	return false;
 }

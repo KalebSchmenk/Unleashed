@@ -7,6 +7,8 @@
 #include "Enemy Headers/Enemies.h"
 #include <stdlib.h>
 #include <iostream>
+#include <windows.h>
+
 
 class Duel
 {

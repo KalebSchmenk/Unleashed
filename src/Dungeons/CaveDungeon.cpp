@@ -24,6 +24,7 @@ bool CaveDungeon::StartDungeon(PlayerObj *player)
 {
 	system("CLS"); // Clear console (Slow)
 	std::cout << "Welcome to the CAVE DUNGEON!\n\n";
+	Sleep(2500);
 
 	SelectDifficulty();
 
@@ -45,6 +46,7 @@ bool CaveDungeon::StartDungeon(PlayerObj *player)
 
 			duel = new Duel(player, enemy);
 			duel->StartDuel();
+
 			system("CLS"); // Clear console (Slow)
 
 			if (duel->playerWon == false && duel->enemyWon == false)
@@ -66,6 +68,9 @@ bool CaveDungeon::StartDungeon(PlayerObj *player)
 
 				std::cout << "You got " << enemy->Die().GetItemCount() << " " << enemy->Die().GetItemName() << "(s)";
 				std::cout << "\n\nand\n\n" << coins << " coins!";
+
+				player->LevelUp();
+
 				Sleep(2500);
 
 				EndDungeon();
@@ -90,6 +95,7 @@ bool CaveDungeon::StartDungeon(PlayerObj *player)
 
 			duel = new Duel(player, enemy);
 			duel->StartDuel();
+
 			system("CLS"); // Clear console (Slow)
 
 			if (duel->playerWon == false && duel->enemyWon == false)
@@ -112,6 +118,9 @@ bool CaveDungeon::StartDungeon(PlayerObj *player)
 				std::cout << "You got " << enemy->Die().GetItemCount() << " " << enemy->Die().GetItemName() + "(s)";
 				std::cout << "\n\nand\n\n";
 				std::cout << coins << " coins!";
+
+				player->LevelUp();
+
 				Sleep(2500);
 
 				EndDungeon();
@@ -135,6 +144,7 @@ bool CaveDungeon::StartDungeon(PlayerObj *player)
 
 			duel = new Duel(player, enemy);
 			duel->StartDuel();
+
 			system("CLS"); // Clear console (Slow)
 
 			if (duel->playerWon == false && duel->enemyWon == false)
@@ -151,11 +161,16 @@ bool CaveDungeon::StartDungeon(PlayerObj *player)
 
 				Sleep(2500);
 				player->AddItem(enemy->Die());
-				int coins = 3;
+				int coins = 15;
 				player->GetPlayerData()->coins.ChangeItemCount(coins);
 
 				std::cout << "You got " << enemy->Die().GetItemCount() << " " << enemy->Die().GetItemName() << "(s)";
 				std::cout << "\n\nand\n\n" << coins << " coins!";
+
+				std::cout << "\n\n======Thanks for playing my demo!======\n\n";
+
+				player->LevelUp();
+
 				Sleep(2500);
 
 				EndDungeon();

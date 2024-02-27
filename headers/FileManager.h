@@ -17,7 +17,7 @@ class DataManager
 {
 public:
 	void SaveData(PlayerData& player);
-	int DeleteData(); // Delete data func
+	int DeleteData(PlayerData& data); // Delete data func
 	void LoadData(PlayerData& data);
 
 	std::string playerFilePath = "PlayerInfo.txt";

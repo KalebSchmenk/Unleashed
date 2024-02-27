@@ -149,7 +149,7 @@ void PlayerObj::PrintItems()
 	std::cout << playerData.playerName << "'s inventory\n\n";
 	std::cout << "Health: " << playerData.playerHealth << "\n\n";
 	std::cout << "Level: " << playerData.playerLevel << "\n\n";
-	std::cout << "Current Sword : " << playerData.playerSword.GetItemName() << "\n";
+	std::cout << "Current Sword : " << playerData.playerSword.GetItemName() << " which deals " << playerData.playerSword.damageOutput << " damage!\n";
 	std::cout << "Gold Count : " << playerData.coins.GetItemCount() << "\n\n";
 
 	std::cout << "Current Items" << "\n";
@@ -157,32 +157,32 @@ void PlayerObj::PrintItems()
 	if (playerData.itemSlotOne.IsValid())
 	{
 		foundAtLeastOneItem = true;
-		std::cout << playerData.itemSlotOne.GetItemName() << " : " << playerData.itemSlotOne.GetItemCount() << "\n";
+		std::cout << playerData.itemSlotOne.GetItemName() << " : " << playerData.itemSlotOne.GetItemCount() << " | " << playerData.itemSlotOne.GetItemDescription() << "\n";
 	}
 	if (playerData.itemSlotTwo.IsValid())
 	{
 		foundAtLeastOneItem = true;
-		std::cout << playerData.itemSlotTwo.GetItemName() << " : " << playerData.itemSlotTwo.GetItemCount() << "\n";
+		std::cout << playerData.itemSlotTwo.GetItemName() << " : " << playerData.itemSlotTwo.GetItemCount() << " | " << playerData.itemSlotTwo.GetItemDescription() << "\n";
 	}
 	if (playerData.itemSlotThree.IsValid())
 	{
 		foundAtLeastOneItem = true;
-		std::cout << playerData.itemSlotThree.GetItemName() << " : " << playerData.itemSlotThree.GetItemCount() << "\n";
+		std::cout << playerData.itemSlotThree.GetItemName() << " : " << playerData.itemSlotThree.GetItemCount() << " | " << playerData.itemSlotThree.GetItemDescription() << "\n";
 	}
 	if (playerData.itemSlotFour.IsValid())
 	{
 		foundAtLeastOneItem = true;
-		std::cout << playerData.itemSlotFour.GetItemName() << " : " << playerData.itemSlotFour.GetItemCount() << "\n";
+		std::cout << playerData.itemSlotFour.GetItemName() << " : " << playerData.itemSlotFour.GetItemCount() << " | " << playerData.itemSlotFour.GetItemDescription() << "\n";
 	}
 	if (playerData.itemSlotFive.IsValid())
 	{
 		foundAtLeastOneItem = true;
-		std::cout << playerData.itemSlotFive.GetItemName() << " : " << playerData.itemSlotFive.GetItemCount() << "\n";
+		std::cout << playerData.itemSlotFive.GetItemName() << " : " << playerData.itemSlotFive.GetItemCount() << " | " << playerData.itemSlotFive.GetItemDescription() << "\n";
 	}
 	if (playerData.itemSlotSix.IsValid())
 	{
 		foundAtLeastOneItem = true;
-		std::cout << playerData.itemSlotSix.GetItemName() << " : " << playerData.itemSlotSix.GetItemCount() << "\n";
+		std::cout << playerData.itemSlotSix.GetItemName() << " : " << playerData.itemSlotSix.GetItemCount() << " | " << playerData.itemSlotSix.GetItemDescription() << "\n";
 	}
 
 	if (!foundAtLeastOneItem) std::cout << "\nYou have not found any items yet!\n";

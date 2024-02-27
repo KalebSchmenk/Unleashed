@@ -36,7 +36,7 @@
     <ClCompile Include="src\FileManager.cpp">
       <Filter>Source Files\Data</Filter>
     </ClCompile>
-    <ClCompile Include="src\Dungeon.cpp">
+    <ClCompile Include="src\Dungeons\Dungeon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Dungeons\CaveDungeon.cpp">

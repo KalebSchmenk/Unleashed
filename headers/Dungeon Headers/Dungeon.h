@@ -4,6 +4,7 @@
 #define DUNGEON_GENERATOR_H
 
 #include "Player.h"
+#include <windows.h>
 #include <stdexcept>
 
 static enum DungeonDifficulty

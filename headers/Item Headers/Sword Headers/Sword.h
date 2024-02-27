@@ -16,6 +16,6 @@ public:
 
 	Sword();
 
-	int damageOutput = 20;
+	int damageOutput = 3;
 };
 #endif

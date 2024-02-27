@@ -8,7 +8,7 @@
 // Saves player data to .dat file
 void DataManager::SaveData(PlayerData& data)
 {
-	DeleteData(); // Clear path for new file
+	std::remove(playerFilePath.c_str()); // Clear path for new file
 
 	std::ofstream f(playerFilePath, std::ios::out);
 
@@ -57,11 +57,20 @@ void DataManager::SaveData(PlayerData& data)
 }
 
 // Deletes player .dat data file
-int DataManager::DeleteData()
+int DataManager::DeleteData(PlayerData& data)
 {
 	try
 	{
 		std::remove(playerFilePath.c_str());
+		data.playerSword.DeleteItem();
+		data.itemSlotOne.DeleteItem();
+		data.itemSlotTwo.DeleteItem();
+		data.itemSlotThree.DeleteItem();
+		data.itemSlotFour.DeleteItem();
+		data.itemSlotFive.DeleteItem();
+		data.itemSlotSix.DeleteItem();
+
+		data.playerName = "null";
 		return 1;
 	}
 	catch (...)
