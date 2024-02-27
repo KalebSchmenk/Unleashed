@@ -8,6 +8,45 @@
 // Saves player data to .dat file
 void DataManager::SaveData(PlayerData& data)
 {
+	DeleteData(); // Clear path for new file
+
+	std::ofstream f(playerFilePath, std::ios::out);
+
+	//_______________
+	// from rapidJSON
+	//
+	if (f.is_open())
+	{
+		rapidjson::StringBuffer s;
+		rapidjson::Writer<rapidjson::StringBuffer> writer(s);
+
+		writer.StartObject();
+
+		writer.Key("playerName");
+		writer.String(data.playerName.c_str());
+
+		writer.Key("playerLevel");
+		writer.Int(data.playerLevel);
+
+		writer.Key("playerHealth");
+		writer.Int(data.playerHealth);
+
+		writer.Key("playerCoins");
+		writer.Int(data.coins.GetItemCount());
+
+		writer.EndObject();
+
+		f << s.GetString() << std::endl;
+		f.close();
+	}
+	else
+	{
+		throw std::invalid_argument("Couldn't open a new file");
+	}
+	//
+	// from rapidJSON
+	//_______________
+
 	data.playerSword.SaveItem();
 	data.itemSlotOne.SaveItem();
 	data.itemSlotTwo.SaveItem();
@@ -15,48 +54,6 @@ void DataManager::SaveData(PlayerData& data)
 	data.itemSlotFour.SaveItem();
 	data.itemSlotFive.SaveItem();
 	data.itemSlotSix.SaveItem();
-
-
-
-	const PlayerData newData = data;
-
-	std::ofstream outputFile("PlayerDataFile.txt", std::ios::binary);
-
-	if (!outputFile.is_open())
-	{
-		std::cerr << "Error opening file for writing: " << "PlayerDataFile.txt" << std::endl;
-		return;
-	}
-
-	// Write the PlayerData struct to the file
-	outputFile.write(reinterpret_cast<const char*>(&newData), sizeof(PlayerData));
-
-	outputFile.close();
-
-	
-
-
-
-	//std::fstream f;
-
-	//// If a file exists delete it, we are overriding it
-	//if (std::filesystem::exists("PlayerDataFile.txt"))
-	//{
-	//	DeleteData();
-	//}
-
-	//f.open("PlayerDataFile.txt", std::ios::app);
-	//
-	//if (f)
-	//{
-	//	f.write((char*)playerData, sizeof(*playerData));
-
-	//	f.close();
-	//}
-	//else
-	//{
-	//	throw std::invalid_argument("Couldn't open a new file");
-	//}
 }
 
 // Deletes player .dat data file
@@ -64,7 +61,7 @@ int DataManager::DeleteData()
 {
 	try
 	{
-		std::remove("PlayerDataFile.txt");
+		std::remove(playerFilePath.c_str());
 		return 1;
 	}
 	catch (...)
@@ -76,22 +73,73 @@ int DataManager::DeleteData()
 // Loads data
 void DataManager::LoadData(PlayerData& data)
 {
-	std::ifstream inputFile("PlayerDataFile.txt", std::ios::binary);
+	std::ifstream fileStream(playerFilePath, std::ios::in);
 
-	if (!inputFile.is_open())
+	//_______________
+	// from rapidJSON
+	//
+	if (!fileStream.is_open())
 	{
-		//std::cerr << "Error opening file for reading: " << "PlayerDataFile.txt" << std::endl;
-		throw std::invalid_argument("No data file found");
-
-		return;
+		throw std::invalid_argument("Couldn't open the file for reading");
 	}
 
-	// Read the PlayerData struct from the file
-	inputFile.read(reinterpret_cast<char*>(&data), sizeof(PlayerData));
+	// Get the file size
+	fileStream.seekg(0, std::ios::end);
+	std::streamsize fileSize = fileStream.tellg();
+	fileStream.seekg(0, std::ios::beg);
 
-	inputFile.close();
+	// Read the entire file into a buffer
+	std::vector<char> buffer(static_cast<size_t>(fileSize));
+	fileStream.read(buffer.data(), fileSize);
 
-	// wow
+	// Close the file
+	fileStream.close();
+
+	// Parse the JSON data
+	rapidjson::Document document;
+	document.Parse(buffer.data());
+
+	if (document.HasParseError())
+	{
+		throw std::runtime_error("Error parsing JSON");
+	}
+
+	// Extract values from the JSON document
+	if (document.IsObject()) {
+		const rapidjson::Value& playerName = document["playerName"];
+		const rapidjson::Value& playerLevel = document["playerLevel"];
+		const rapidjson::Value& playerHealth = document["playerHealth"];
+		const rapidjson::Value& playerCoins = document["playerCoins"];
+
+		if (playerName.IsString()) {
+			data.playerName = playerName.GetString();
+		}
+		else
+		{
+			throw std::runtime_error("Invalid JSON format");
+		}
+
+		if (playerLevel.IsInt() && playerHealth.IsInt() && playerCoins.IsInt())
+		{
+			data.playerLevel = playerLevel.GetInt();
+			data.playerHealth = playerHealth.GetInt();
+			data.coins.SetItemCount(playerCoins.GetInt());
+		}
+		else
+		{
+			throw std::runtime_error("Invalid JSON format");
+		}
+	}
+	else
+	{
+		throw std::runtime_error("Invalid JSON format");
+	}
+	//
+	// from rapidJSON
+	//_______________
+
+
+	// Save Inventory
 	Item* sword = data.playerSword.LoadItem();
 	Sword* newSword = dynamic_cast<Sword*>(sword);
 	data.playerSword = *newSword;
@@ -102,26 +150,6 @@ void DataManager::LoadData(PlayerData& data)
 	data.itemSlotFour = *data.itemSlotFour.LoadItem();
 	data.itemSlotFive = *data.itemSlotFive.LoadItem();
 	data.itemSlotSix = *data.itemSlotSix.LoadItem();
-
-
-
-
-
-
-	//std::fstream f;
-
-	/*f.open("PlayerDataFile.txt", std::ios::in);
-
-	if(f)
-	{
-		f.seekg(0);
-		f.read((char*)data, sizeof(*data));
-		f.close();
-	}
-	else
-	{
-		throw std::invalid_argument("No data file found");
-	}*/
 
 
 	// If the name or health are invalid arguments, default to these values.

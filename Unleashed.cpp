@@ -128,8 +128,8 @@ void EnterMenuLoop()
 			case 1:
 			{
 				// Entering a dungeon
-				DungeonDifficulty difficulty = Easy;
-				Dungeon* enteredDungeon = new CaveDungeon(difficulty);
+				DungeonDifficulty difficulty = Easy; // Default easy, player will select
+				Dungeon* enteredDungeon = new CaveDungeon(difficulty); // Here we are forcing a cave dungeon. When more dungeons are created we would get a random dungeon
 
 				bool alive = enteredDungeon->StartDungeon(&player);
 			

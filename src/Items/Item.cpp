@@ -56,8 +56,14 @@ void Item::SetValid(bool set)
 
 void Item::SaveItem()
 {
-	std::ofstream f(this->filePath);
+	DeleteItem(); // Clear path for new file
 
+
+	std::ofstream f(this->filePath.c_str(), std::ios::out);
+	
+	//_______________
+	// from rapidJSON
+	//
 	if (f.is_open())
 	{
 		rapidjson::StringBuffer s;
@@ -71,6 +77,9 @@ void Item::SaveItem()
 		writer.Key("itemDescription");
 		writer.String(this->itemDescription.c_str());
 
+		writer.Key("itemFilePath");
+		writer.String(this->filePath.c_str());
+
 		writer.Key("itemCount");
 		writer.Int(this->itemCount);
 
@@ -79,21 +88,27 @@ void Item::SaveItem()
 
 		writer.EndObject();
 
-		f << s.GetString();
+		f << s.GetString() << std::endl;
 		f.close();
 	}
 	else
 	{
 		throw std::invalid_argument("Couldn't open a new file");
 	}
+	//
+	// from rapidJSON
+	//_______________
 }
 
 Item* Item::LoadItem()
 {
 	Item* item = new Item();
 
-	std::ifstream fileStream(this->filePath, std::ios::in | std::ios::binary);
+	std::ifstream fileStream(this->filePath, std::ios::in);
 
+	//_______________
+	// from rapidJSON
+	//
 	if (!fileStream.is_open()) 
 	{
 		throw std::invalid_argument("Couldn't open the file for reading");
@@ -126,10 +141,12 @@ Item* Item::LoadItem()
 		const rapidjson::Value& itemDescriptionValue = document["itemDescription"];
 		const rapidjson::Value& itemCount = document["itemCount"];
 		const rapidjson::Value& itemIsValid = document["itemIsValid"];
+		const rapidjson::Value& itemFilePath = document["itemFilePath"];
 
-		if (itemNameValue.IsString() && itemDescriptionValue.IsString()) {
+		if (itemNameValue.IsString() && itemDescriptionValue.IsString() && itemFilePath.IsString()) {
 			item->itemName = itemNameValue.GetString();
 			item->itemDescription = itemDescriptionValue.GetString();
+			item->filePath = itemFilePath.GetString();
 		}
 		else 
 		{
@@ -158,6 +175,10 @@ Item* Item::LoadItem()
 	{
 		throw std::runtime_error("Invalid JSON format");
 	}
+
+	//
+	// from rapidJSON
+	//_______________
 
 	return item;
 }
